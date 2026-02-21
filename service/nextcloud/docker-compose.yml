@@ -1,31 +1,82 @@
 name: nextcloud
 
 services:
-  nextcloud-aio-mastercontainer:
-    image: nextcloud/all-in-one:latest
+  db:
+    image: mariadb:10.11
 
-    container_name: nextcloud-aio-mastercontainer
-
-    ports:
-      - 2500:8080/tcp
+    container_name: nextcloud-db
 
     volumes:
-      - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ${HOMELAB_DATA_DIR}/nextcloud/data:/nextcloud-data
+      - ${HOMELAB_DATA_DIR}/nextcloud/db:/var/lib/mysql
 
     environment:
-      APACHE_PORT: 11000
-      NEXTCLOUD_DATADIR: /nextcloud-data
-      SKIP_DOMAIN_VALIDATION: "true"
-      TZ: ${TZ}
-      APACHE_IP_BINDING: "0.0.0.0"
-      TRUSTED_CACERTS_DIR: /usr/local/share/ca-certificates
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
     restart: unless-stopped
 
-    init: true
+    healthcheck:
+      disable: false
 
-volumes:
-  nextcloud_aio_mastercontainer:
-    name: nextcloud_aio_mastercontainer
+  redis:
+    image: redis:alpine
+
+    container_name: nextcloud-redis
+
+    restart: unless-stopped
+
+    healthcheck:
+      disable: false
+
+  collabora:
+    image: collabora/code:latest
+
+    container_name: nextcloud-collabora
+
+    ports:
+      - 9980:9980
+
+    environment:
+      - aliasgroup1=http://${NEXTCLOUD_TRUSTED_DOMAINS}
+      - DONT_GEN_SSL_CERT=YES
+      - extra_params=--o:ssl.enable=false --o:ssl.termination=true
+
+    restart: unless-stopped
+
+    cap_add:
+      - MKNOD
+
+  nextcloud:
+    image: nextcloud:latest
+
+    container_name: nextcloud
+
+    ports:
+      - 2500:80
+
+    volumes:
+      - ${HOMELAB_DATA_DIR}/nextcloud/data:/var/www/html/data
+      - ${HOMELAB_DATA_DIR}/nextcloud/html:/var/www/html
+
+    env_file:
+      - .env
+
+    environment:
+      TZ: ${TZ}
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      REDIS_HOST: ${REDIS_HOST}
+      NEXTCLOUD_TRUSTED_DOMAINS: ${NEXTCLOUD_TRUSTED_DOMAINS}
+
+    depends_on:
+      - db
+      - redis
+
+    restart: unless-stopped
+
+    healthcheck:
+      disable: false
