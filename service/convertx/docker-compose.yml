@@ -1,0 +1,16 @@
+services:
+  convertx:
+    image: ghcr.io/c4illin/convertx:latest
+
+    container_name: convertx
+
+    ports:
+      - 3000:3000/tcp
+
+    volumes:
+      - ${HOMELAB_DATA_DIR}/convertx:/app/data
+
+    env_file:
+      - .env
+
+    restart: unless-stopped
