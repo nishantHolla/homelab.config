@@ -1,0 +1,22 @@
+name: adguardhome
+
+services:
+  adguardhome:
+    image: adguard/adguardhome
+
+    container_name: adguard
+
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+      - 3500:80/tcp
+      - 3501:3000/tcp
+
+    volumes:
+      - ${HOMELAB_DATA_DIR}/adguard/conf:/opt/adguardhome/conf
+      - ${HOMELAB_DATA_DIR}/adguard/work
+
+    restart: unless-stopped
+
+    healthcheck:
+      disable: false
