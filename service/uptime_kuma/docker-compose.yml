@@ -1,0 +1,42 @@
+name: uptime-kuma
+
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+
+    container_name: uptime-kuma
+
+    ports:
+      - "4000:3001"
+
+    volumes:
+      - ${HOMELAB_DATA_DIR}/uptime_kuma/data:/app/data  # Configuring persistent storage
+
+    env_file:
+      - .env
+
+    environment:
+      - TZ=${TZ}
+      - UMASK=${UMASK}
+
+    networks:
+      - kuma_network
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000"]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 5s
+
+    restart: unless-stopped
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  kuma_network:
+    driver: bridge
