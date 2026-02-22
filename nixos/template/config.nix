@@ -80,21 +80,7 @@
   networking.firewall.enable = true;
   networking.firewall.trustedInterfaces = [ "tailscale0" ];
   networking.firewall.allowedTCPPorts = [
-    # Adguard
-    53
-    3500
-    3501
 
-    # Nginx Proxy Manager
-    80
-    81
-    443
-
-    # Immich
-    2000
-
-    # Nextcloud
-    2500
   ];
   networking.firewall.allowedUDPPorts = [ ];
 
