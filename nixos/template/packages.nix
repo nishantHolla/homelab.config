@@ -8,6 +8,7 @@
     gcc
     git
     neovim
+    python313
     tmux
     wget
   ];
