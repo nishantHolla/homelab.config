@@ -18,6 +18,14 @@ if __name__ == "__main__":
 
     if command == "help":
         utils.io.info("system", u.SYSTEM_USAGE)
+
+    elif command == "nixos":
+        from commands import nixos
+
+        ec = nixos.run(args)
+        if ec:
+            exit(ec)
+
     else:
         utils.io.error("system",
                        f'Unknown command "{command}"\n'
