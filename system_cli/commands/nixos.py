@@ -23,7 +23,7 @@ def setup() -> int:
     utils.io.info("setup", f"Checking if root config exists at {ROOT_CONFIG_DIR}")
     if not ROOT_CONFIG_DIR.is_dir() or not ROOT_HARDWARE_FILE.is_file():
         utils.io.info("setup", f"Making root config at {ROOT_CONFIG_DIR}")
-        _, rc, err = utils.runner.run(
+        _, rc, _ = utils.runner.run(
             "setup",
             f"nixos-generate-config --root {ROOT_PATH}",
             capture=True,
@@ -37,7 +37,7 @@ def setup() -> int:
         or not HOST_PACKAGE_FILE.is_file()
     ):
         utils.io.info("setup", f"Making host config at {HOST_CONFIG_DIR}")
-        _, rc, err = utils.runner.run(
+        _, rc, _ = utils.runner.run(
             "setup",
             f"cp -r {v.NIXOS_TEMPLATE_DIR} {HOST_CONFIG_DIR}",
             capture=True,
@@ -45,7 +45,7 @@ def setup() -> int:
         )
 
         utils.io.info("setup", "Updating hardware file for host")
-        _, rc, err = utils.runner.run(
+        _, rc, _ = utils.runner.run(
             "setup",
             f"cp -r {ROOT_HARDWARE_FILE} {HOST_HARDWARE_FILE}",
             capture=True,
@@ -54,7 +54,7 @@ def setup() -> int:
 
         utils.io.info("setup", "Updating config file for host")
         rc = utils.file.find_and_replace(
-            HOST_CONFIG_FILE, "$TEMPLATE_HOSTNAME", HOSTNAME, critical=True
+            HOST_CONFIG_FILE, "$TEMPLATE_HOSTNAME", HOSTNAME
         )
         if rc:
             utils.io.error("setup", "Failed to update config file")
@@ -70,7 +70,7 @@ def setup() -> int:
         return 2
 
     check = rf"(nixosConfigurations\.{HOSTNAME}\s*=\s*nixpkgs\.lib\.nixosSystem\s*)"
-    if not re.serach(check, flake, re.DOTALL):
+    if not re.search(check, flake, re.DOTALL):
         utils.io.info("setup", "Updating flake file")
 
         pattern = r"(nixosConfigurations\.template\s*=\s*nixpkgs\.lib\.nixosSystem\s*\{.*?\};)"
@@ -84,7 +84,7 @@ def setup() -> int:
             utils.io.info("setup", "Failed to find template block")
             return 3
 
-        flake = flake[: match.end()] + "\n\n    " + block + flake[mathc.end() :]
+        flake = flake[: match.end()] + "\n\n    " + block + flake[match.end() :]
         try:
             with open(v.NIXOS_FLAKE_FILE, "w") as file:
                 file.write(flake)
@@ -94,7 +94,7 @@ def setup() -> int:
             return 4
 
     utils.io.info("setup", "Adding new conig to git")
-    _, rc, err = utils.runner.run(
+    _, rc, _ = utils.runner.run(
         "setup", f"git add {v.NIXOS_DIR}", capture=True, critical=True
     )
 

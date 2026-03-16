@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import utils
-from config import values as v
 from config import usage as u
 
 import sys
@@ -27,9 +26,9 @@ if __name__ == "__main__":
             exit(ec)
 
     else:
-        utils.io.error("system",
-                       f'Unknown command "{command}"\n'
-                       "Run 'system help' for list of commands"
-                       )
+        utils.io.error(
+            "system",
+            f"Unknown command \"{command}\"\nRun 'system help' for list of commands",
+        )
 
     exit(0)
