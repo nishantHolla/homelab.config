@@ -99,7 +99,7 @@ def setup() -> int:
     )
 
     utils.io.info("setup", "Installing system")
-    rc = utils.runner.run(
+    utils.runner.run(
         "setup",
         f"nixos-install --flake {v.NIXOS_DIR}#{HOSTNAME}",
         capture=False,
@@ -108,7 +108,7 @@ def setup() -> int:
 
     if USERNAME != "":
         utils.io.info("setup", f"Setting password for {USERNAME}")
-        rc = utils.runner.run(
+        utils.runner.run(
             "setup",
             f"nixos-enter --root {ROOT_PATH} -c 'passwd {USERNAME}'",
             capture=False,
@@ -125,7 +125,7 @@ def switch() -> int:
         return 1
 
     utils.io.info("switch", "Switching nixos config")
-    rc = utils.runner.run(
+    utils.runner.run(
         "switch",
         f"sudo nixos-rebuild switch --flake {v.NIXOS_DIR}#{HOSTNAME}",
         capture=False,

@@ -11,22 +11,13 @@ def run(
         command_str = " ".join(command) if type(command) is list else command
         utils.io.info(author, f"Running {command_str}")
 
-    if capture:
-        result = subprocess.run(
-            command, capture_output=True, text=True, check=True, shell=True
-        )
+    result = subprocess.run(
+        command, capture_output=capture, text=True, check=True, shell=True
+    )
 
-        if result.returncode and critical:
-            utils.io.error(author, f"Command failed: {result.stderr}")
-            exit(1)
+    if result.returncode and critical:
+        append = f": {result.stderr}" if capture else ""
+        utils.io.error(author, f"Command failed{append}")
+        exit(1)
 
-        return result.stdout, result.returncode, result.stderr
-
-    else:
-        result = subprocess.run(command)
-
-        if result.returncode and critical:
-            utils.io.error(author, "Command failed")
-            exit(1)
-
-        return "", result.returncode, ""
+    return result.stdout, result.returncode, result.stderr
