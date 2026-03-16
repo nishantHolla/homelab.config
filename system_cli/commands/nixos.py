@@ -23,9 +23,12 @@ def setup() -> int:
     utils.io.info("setup", f"Checking if root config exists at {ROOT_CONFIG_DIR}")
     if not ROOT_CONFIG_DIR.is_dir() or not ROOT_HARDWARE_FILE.is_file():
         utils.io.info("setup", f"Making root config at {ROOT_CONFIG_DIR}")
-        _, rc, err = utils.runner.run("setup", f"nixos-generate-conig --root {ROOT_PATH}",
-                                      capture=True,
-                                      critical=True)
+        _, rc, err = utils.runner.run(
+            "setup",
+            f"nixos-generate-config --root {ROOT_PATH}",
+            capture=True,
+            critical=True,
+        )
 
     utils.io.info("setup", f"Checking if host config exists at {HOST_CONFIG_DIR}")
     if (
@@ -34,18 +37,25 @@ def setup() -> int:
         or not HOST_PACKAGE_FILE.is_file()
     ):
         utils.io.info("setup", f"Making host config at {HOST_CONFIG_DIR}")
-        _, rc, err = utils.runner.run("setup", f"cp -r {v.NIXOS_TEMPLATE_DIR} {HOST_CONFIG_DIR}",
-                                      capture=True,
-                                      critical=True)
+        _, rc, err = utils.runner.run(
+            "setup",
+            f"cp -r {v.NIXOS_TEMPLATE_DIR} {HOST_CONFIG_DIR}",
+            capture=True,
+            critical=True,
+        )
 
         utils.io.info("setup", "Updating hardware file for host")
-        _, rc, err = utils.runner.run("setup", f"cp -r {ROOT_HARDWARE_FILE} {HOST_HARDWARE_FILE}",
-                                      capture=True,
-                                      critical=True)
+        _, rc, err = utils.runner.run(
+            "setup",
+            f"cp -r {ROOT_HARDWARE_FILE} {HOST_HARDWARE_FILE}",
+            capture=True,
+            critical=True,
+        )
 
         utils.io.info("setup", "Updating config file for host")
-        rc = utils.file.find_and_replace(HOST_CONFIG_FILE, "$TEMPLATE_HOSTNAME", HOSTNAME,
-                                         critical=True)
+        rc = utils.file.find_and_replace(
+            HOST_CONFIG_FILE, "$TEMPLATE_HOSTNAME", HOSTNAME, critical=True
+        )
         if rc:
             utils.io.error("setup", "Failed to update config file")
             return 1
@@ -84,20 +94,26 @@ def setup() -> int:
             return 4
 
     utils.io.info("setup", "Adding new conig to git")
-    _, rc, err = utils.runner.run("setup", f"git add {v.NIXOS_DIR}",
-                                  capture=True,
-                                  critical=True)
+    _, rc, err = utils.runner.run(
+        "setup", f"git add {v.NIXOS_DIR}", capture=True, critical=True
+    )
 
     utils.io.info("setup", "Installing system")
-    rc = utils.runner.run("setup", f"nixos-install --flake {v.NIXOS_DIR}#{HOSTNAME}",
-                          capture=False,
-                          critical=True)
+    rc = utils.runner.run(
+        "setup",
+        f"nixos-install --flake {v.NIXOS_DIR}#{HOSTNAME}",
+        capture=False,
+        critical=True,
+    )
 
     if USERNAME != "":
         utils.io.info("setup", f"Setting password for {USERNAME}")
-        rc = utils.runner.run("setup", f"nixos-enter --root {ROOT_PATH} -c 'passwd {USERNAME}'",
-                              capture=False,
-                              critical=True)
+        rc = utils.runner.run(
+            "setup",
+            f"nixos-enter --root {ROOT_PATH} -c 'passwd {USERNAME}'",
+            capture=False,
+            critical=True,
+        )
 
     return 0
 
@@ -109,11 +125,15 @@ def switch() -> int:
         return 1
 
     utils.io.info("switch", "Switching nixos config")
-    rc = utils.runner.run("switch", f"sudo nixos-rebuild switch --flake {v.NIXOS_DIR}#{HOSTNAME}",
-                          capture=False,
-                          critical=True)
+    rc = utils.runner.run(
+        "switch",
+        f"sudo nixos-rebuild switch --flake {v.NIXOS_DIR}#{HOSTNAME}",
+        capture=False,
+        critical=True,
+    )
 
     return 0
+
 
 def run(args: list[str]) -> int:
     if len(args) == 0:
@@ -135,9 +155,9 @@ def run(args: list[str]) -> int:
         return ec
 
     else:
-        utils.io.error("nixos",
-                       f'Unknown sub-command {sub_command}\n'
-                       "Run 'system nixos help' for list of all sub-commands"
-                       )
+        utils.io.error(
+            "nixos",
+            f"Unknown sub-command {sub_command}\n"
+            "Run 'system nixos help' for list of all sub-commands",
+        )
         return 1
-
