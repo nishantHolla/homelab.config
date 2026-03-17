@@ -18,7 +18,7 @@ def setup() -> int:
     HOST_CONFIG_DIR = v.NIXOS_DIR / HOSTNAME
     HOST_CONFIG_FILE = HOST_CONFIG_DIR / "config.nix"
     HOST_PACKAGE_FILE = HOST_CONFIG_DIR / "package.nix"
-    HOST_HARDWARE_FILE = HOST_CONFIG_DIR / "harware.nix"
+    HOST_HARDWARE_FILE = HOST_CONFIG_DIR / "hardware.nix"
 
     utils.io.info("setup", f"Checking if root config exists at {ROOT_CONFIG_DIR}")
     if not ROOT_CONFIG_DIR.is_dir() or not ROOT_HARDWARE_FILE.is_file():
