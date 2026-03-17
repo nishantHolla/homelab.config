@@ -4,6 +4,9 @@
 
 - Create `.env` file with the following values
 ```bash
+# Port number for the dashbard
+PORT=
+
 # Time zone (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
 TZ=
 
@@ -20,4 +23,4 @@ DB_USERNAME=
 DB_DATABASE_NAME=
 ```
 
-- Visit `http://<homelab-ip>:2000` after `docker compose up` to create admin account
+- Visit `http://<homelab-ip>:<PORT>` after `docker compose up` to create admin account

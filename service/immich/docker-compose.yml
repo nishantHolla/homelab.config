@@ -7,7 +7,7 @@ services:
     container_name: immich_server
 
     ports:
-      - 2000:2283/tcp
+      - ${PORT}:2283/tcp
 
     volumes:
       - ${HOMELAB_DATA_DIR}/immich/library:/data
