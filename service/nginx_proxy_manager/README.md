@@ -11,4 +11,4 @@ PORT=
 TZ=
 ```
 
-- Visit `http://<homelab-ip>:81` after `docker compose up` to create admin account
+- Visit `http://<homelab-ip>:<PORT>` after `docker compose up` to create admin account
