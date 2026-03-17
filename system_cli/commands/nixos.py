@@ -1,13 +1,14 @@
-import utils
-from config import values as v
-from config import usage as u
-
+import re
 import socket
 from pathlib import Path
-import re
+
+import utils
+from config import usage as u
+from config import values as v
+from utils.result import Result
 
 
-def setup() -> int:
+def setup() -> Result:
     HOSTNAME = utils.io.get_input("nixos", "Enter hostname: ")
     USERNAME = utils.io.get_input("nixos", "Enter username: ")
     ROOT_PATH = Path(utils.io.get_input("nixos", "Enter root path: "))
@@ -23,7 +24,7 @@ def setup() -> int:
     utils.io.info("setup", f"Checking if root config exists at {ROOT_CONFIG_DIR}")
     if not ROOT_CONFIG_DIR.is_dir() or not ROOT_HARDWARE_FILE.is_file():
         utils.io.info("setup", f"Making root config at {ROOT_CONFIG_DIR}")
-        _, rc, _ = utils.runner.run(
+        utils.runner.run(
             "setup",
             f"nixos-generate-config --root {ROOT_PATH}",
             capture=True,
@@ -37,7 +38,7 @@ def setup() -> int:
         or not HOST_PACKAGE_FILE.is_file()
     ):
         utils.io.info("setup", f"Making host config at {HOST_CONFIG_DIR}")
-        _, rc, _ = utils.runner.run(
+        utils.runner.run(
             "setup",
             f"cp -r {v.NIXOS_TEMPLATE_DIR} {HOST_CONFIG_DIR}",
             capture=True,
@@ -45,7 +46,7 @@ def setup() -> int:
         )
 
         utils.io.info("setup", "Updating hardware file for host")
-        _, rc, _ = utils.runner.run(
+        utils.runner.run(
             "setup",
             f"cp -r {ROOT_HARDWARE_FILE} {HOST_HARDWARE_FILE}",
             capture=True,
@@ -53,12 +54,11 @@ def setup() -> int:
         )
 
         utils.io.info("setup", "Updating config file for host")
-        rc = utils.file.find_and_replace(
+        result = utils.file.find_and_replace(
             HOST_CONFIG_FILE, "$TEMPLATE_HOSTNAME", HOSTNAME
         )
-        if rc:
-            utils.io.error("setup", "Failed to update config file")
-            return 1
+        if result.code != 0:
+            return Result(1, f"Failed to update config file. Error: {result.message}")
 
     utils.io.info("setup", f"Checking if flake file has {HOSTNAME}")
     try:
@@ -66,8 +66,7 @@ def setup() -> int:
             flake = file.read()
 
     except Exception as e:
-        utils.io.error("setup", f"Failed to check flake file. Error: {e}")
-        return 2
+        return Result(2, f"Failed to check flake file. Error: {e}")
 
     check = rf"(nixosConfigurations\.{HOSTNAME}\s*=\s*nixpkgs\.lib\.nixosSystem\s*)"
     if not re.search(check, flake, re.DOTALL):
@@ -81,8 +80,7 @@ def setup() -> int:
             block = extracted_block.replace("template", HOSTNAME)
 
         else:
-            utils.io.info("setup", "Failed to find template block")
-            return 3
+            return Result(3, "Failed to find template block")
 
         flake = flake[: match.end()] + "\n\n    " + block + flake[match.end() :]
         try:
@@ -90,13 +88,10 @@ def setup() -> int:
                 file.write(flake)
 
         except Exception as e:
-            utils.io.error("setup", f"Failed to write flake file. Error: {e}")
-            return 4
+            return Result(4, f"Failed to write flake file. Error: {e}")
 
     utils.io.info("setup", "Adding new conig to git")
-    _, rc, _ = utils.runner.run(
-        "setup", f"git add {v.NIXOS_DIR}", capture=True, critical=True
-    )
+    utils.runner.run("setup", f"git add {v.NIXOS_DIR}", capture=True, critical=True)
 
     utils.io.info("setup", "Installing system")
     utils.runner.run(
@@ -115,14 +110,13 @@ def setup() -> int:
             critical=True,
         )
 
-    return 0
+    return Result(0, "Ok")
 
 
-def switch() -> int:
+def switch() -> Result:
     HOSTNAME = socket.gethostname()
     if not HOSTNAME:
-        utils.io.error("switch", "Failed to get hostname")
-        return 1
+        return Result(1, "Failed to get hostname")
 
     utils.io.info("switch", "Switching nixos config")
     utils.runner.run(
@@ -132,7 +126,7 @@ def switch() -> int:
         critical=True,
     )
 
-    return 0
+    return Result(0, "Ok")
 
 
 def run(args: list[str]) -> int:
@@ -147,12 +141,20 @@ def run(args: list[str]) -> int:
         return 0
 
     elif sub_command == "setup":
-        ec = setup()
-        return ec
+        result = setup()
+
+        if result.code != 0:
+            utils.io.error("setup", result.message)
+
+        return result.code
 
     elif sub_command == "switch":
-        ec = switch()
-        return ec
+        result = switch()
+
+        if result.code != 0:
+            utils.io.error("switch", result.message)
+
+        return result.code
 
     else:
         utils.io.error(

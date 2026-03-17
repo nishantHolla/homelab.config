@@ -1,6 +1,9 @@
 from pathlib import Path
 
-def find_and_replace(file_path: Path | str, find: str, replace: str) -> int:
+from result import Result
+
+
+def find_and_replace(file_path: Path | str, find: str, replace: str) -> Result:
     try:
         with open(file_path, "r") as file:
             data = file.read()
@@ -10,7 +13,7 @@ def find_and_replace(file_path: Path | str, find: str, replace: str) -> int:
         with open(file_path, "w") as file:
             file.write(data)
 
-        return 0
+        return Result(0, "Ok")
 
     except Exception as e:
-        return 1
+        return Result(1, str(e))
