@@ -26,4 +26,4 @@ ACCOUNT_REGISTRATION=
 JWT_SECRET=
 ```
 
-- Visit `http://<homelab-ip>:3000` after `docker compose up` to create admin account
+- Visit `http://<homelab-ip>:<PORT>` after `docker compose up` to create admin account
