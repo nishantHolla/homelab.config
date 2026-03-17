@@ -9,12 +9,15 @@ services:
     ports:
       - 53:53/tcp
       - 53:53/udp
-      - 3500:80/tcp
-      - 3501:3000/tcp
+      - ${PORT}:80/tcp
+      - ${ADMIN_PORT}:3000/tcp
 
     volumes:
       - ${HOMELAB_DATA_DIR}/adguard/conf:/opt/adguardhome/conf
       - ${HOMELAB_DATA_DIR}/adguard/work
+
+    env_file:
+      - .env
 
     restart: unless-stopped
 
