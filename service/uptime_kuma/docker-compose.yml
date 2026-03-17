@@ -7,7 +7,7 @@ services:
     container_name: uptime-kuma
 
     ports:
-      - "4000:3001"
+      - "${PORT}:3001"
 
     volumes:
       - ${HOMELAB_DATA_DIR}/uptime_kuma/data:/app/data  # Configuring persistent storage
