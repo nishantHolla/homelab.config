@@ -4,6 +4,12 @@
 
 - Create `.env` file with the following values
 ```bash
+# Port number for the dashboard
+PORT=
+
+# Port number for collabora
+COLLABORA_PORT=
+
 # Time zone (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
 TZ=
 

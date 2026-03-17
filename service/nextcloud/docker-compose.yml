@@ -36,7 +36,7 @@ services:
     container_name: nextcloud-collabora
 
     ports:
-      - 9980:9980
+      - ${COLLABORA_PORT}:9980
 
     environment:
       - aliasgroup1=http://${NEXTCLOUD_TRUSTED_DOMAINS}
@@ -54,7 +54,7 @@ services:
     container_name: nextcloud
 
     ports:
-      - 2500:80
+      - ${PORT}:80
 
     volumes:
       - ${HOMELAB_DATA_DIR}/nextcloud/data:/var/www/html/data
