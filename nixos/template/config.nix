@@ -20,7 +20,7 @@
   services.zfs.autoScrub.enable = true;
 
   # Networking
-  networking.hostName = "homelab";
+  networking.hostName = "$TEMPLATE_HOSTNAME";
   networking.networkmanager.enable = true;
 
   # Time Zone
