@@ -35,4 +35,4 @@ REDIS_HOST=
 NEXTCLOUD_TRUSTED_DOMAINS=
 ```
 
-- Visit `http://<homelab-ip:2500` after `docker compose up` to create admin account
+- Visit `http://<homelab-ip:<PORT>` after `docker compose up` to create admin account
