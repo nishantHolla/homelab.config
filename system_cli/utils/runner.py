@@ -12,12 +12,11 @@ def run(
         utils.io.info(author, f"Running {command_str}")
 
     result = subprocess.run(
-        command, capture_output=capture, text=True, check=True, shell=True
+        command, capture_output=capture, text=True, check=False, shell=True
     )
 
     if result.returncode and critical:
-        append = f": {result.stderr}" if capture else ""
-        utils.io.error(author, f"Command failed{append}")
+        utils.io.error(author, f"Command failed{result.stderr}")
         exit(1)
 
     return result.stdout, result.returncode, result.stderr
