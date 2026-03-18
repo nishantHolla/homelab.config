@@ -4,7 +4,7 @@
 
 - Create `.env` file with the following values
 ```bash
-# Port number for the dashbard
+# Port number for the dashboard
 PORT=
 
 # Time zone (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)

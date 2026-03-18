@@ -1,0 +1,22 @@
+name: black-candy
+
+services:
+  blackcandy:
+    image: blackcandy/blackcandy:latest
+
+    container_name: blackcandy
+
+    ports:
+      - ${PORT}:3000
+
+    volumes:
+      - ${HOMELAB_DATA_DIR}/blackcandy/data:/app/storage
+      - ${HOMELAB_DATA_DIR}/blackcandy/music:/music
+
+    env_file:
+      - .env
+
+    restart: unless-stopped
+
+    healthcheck:
+      disable: false
