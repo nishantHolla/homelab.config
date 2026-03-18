@@ -25,13 +25,6 @@ if __name__ == "__main__":
         if ec:
             exit(ec)
 
-    elif command == "service":
-        from commands import service
-
-        ec = service.run(args)
-        if ec:
-            exit(ec)
-
     else:
         utils.io.error(
             "system",
