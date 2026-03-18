@@ -22,11 +22,17 @@ def _check_service(service_name: str) -> Result:
 
 
 def _check_all_services() -> Result:
+    found_error = False
+
     for item in v.SERVICE_DIR.iterdir():
         result = _check_service(item.name)
 
         if result.code != 0:
-            return result
+            found_error = True
+            utils.io.error("check", result.message)
+
+    if not found_error:
+        utils.io.info("check", "All services configured")
 
     return Result(0, "Ok")
 
@@ -34,17 +40,16 @@ def _check_all_services() -> Result:
 def check(args: list[str]) -> Result:
     if len(args) == 0:
         result = _check_all_services()
-        message = "All services configured"
 
     else:
         service_name = args.pop(0)
         result = _check_service(service_name)
         message = f"{service_name} service configured correctly"
 
-    if result.code == 0:
-        utils.io.info("check", message)
-    else:
-        utils.io.error("check", result.message)
+        if result.code == 0:
+            utils.io.info("check", message)
+        else:
+            utils.io.error("check", result.message)
 
     return Result(0, "Ok")
 
