@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from result import Result
+from .result import Result
 
 
 def find_and_replace(file_path: Path | str, find: str, replace: str) -> Result:
