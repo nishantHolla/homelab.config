@@ -22,4 +22,4 @@ JWT_SECRET=
 
 - Run `docker compose up`
 
-- Visit `http://<homelab-ip>:<PORT>` to create admin account
+- Visit `http://<homelab-ip>:<CONVERTX_PORT>` to create the admin account

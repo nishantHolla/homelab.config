@@ -19,4 +19,4 @@ DB_DATABASE_NAME=
 
 - Run `docker compose up`
 
-- Visit `http://<homelab-ip>:<IMMICH_PORT>` to create admin account
+- Visit `http://<homelab-ip>:<IMMICH_PORT>` to create the admin account

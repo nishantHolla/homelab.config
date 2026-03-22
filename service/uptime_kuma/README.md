@@ -10,4 +10,4 @@ UMASK=
 
 - Run `docker compose up`
 
-- visit `http://<homelab-ip>:<UPTIME_KUMA_PORT>` to setup admin account
+- visit `http://<homelab-ip>:<UPTIME_KUMA_PORT>` to create the admin account

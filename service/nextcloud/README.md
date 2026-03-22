@@ -28,4 +28,4 @@ NEXTCLOUD_TRUSTED_DOMAINS=
 
 - Run `docker compose up`
 
-- Visit `http://<homelab-ip:<NEXTCLOUD_PORT>` to create admin account
+- Visit `http://<homelab-ip:<NEXTCLOUD_PORT>` to create the admin account
