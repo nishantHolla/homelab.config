@@ -12,11 +12,9 @@ services:
     volumes:
       - ${HOMELAB_DATA_DIR}/uptime_kuma/data:/app/data
 
-    env_file:
-      - .env
-
     environment:
       TZ: ${TZ}
+      UMASK: 0022
 
     networks:
       - kuma_network
