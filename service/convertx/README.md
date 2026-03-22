@@ -4,12 +4,6 @@
 
 - Create `.env` file with the following values
 ```bash
-# Port number for the dashboard
-PORT=
-
-# Time zone (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
-TZ=
-
 # Delete converted files after N hours
 AUTO_DELETE_EVERY_N_HOURS=
 
@@ -26,4 +20,6 @@ ACCOUNT_REGISTRATION=
 JWT_SECRET=
 ```
 
-- Visit `http://<homelab-ip>:<PORT>` after `docker compose up` to create admin account
+- Run `docker compose up`
+
+- Visit `http://<homelab-ip>:<PORT>` to create admin account

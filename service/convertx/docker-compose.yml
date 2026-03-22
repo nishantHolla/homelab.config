@@ -5,12 +5,15 @@ services:
     container_name: convertx
 
     ports:
-      - ${PORT}:3000/tcp
+      - ${CONVERTX_PORT}:3000/tcp
 
     volumes:
       - ${HOMELAB_DATA_DIR}/convertx:/app/data
 
     env_file:
       - .env
+
+    environment:
+      TZ: ${TZ}
 
     restart: unless-stopped
