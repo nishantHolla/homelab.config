@@ -6,7 +6,7 @@ services:
 
     container_name: jellyfin
 
-    user: "${PUID}:${PGID}"
+    user: "${HOMELAB_UID}:${HOMELAB_GID}"
 
     ports:
       - ${JELLYFIN_TCP_PORT}:8096/tcp

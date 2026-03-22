@@ -1,13 +1,6 @@
 # Jellyfin service
 
-- Create `.env` file with the following values
-```bash
-# User ID (usually 1000)
-PUID=
-
-# Group ID (usually 100)
-PGID=
-```
+## Installation
 
 - Run `docker compose up`
 
