@@ -9,8 +9,8 @@ services:
     user: "${PUID}:${PGID}"
 
     ports:
-      - ${TCP_PORT}:8096/tcp
-      - ${UDP_PORT}:7359/udp
+      - ${JELLYFIN_TCP_PORT}:8096/tcp
+      - ${JELLYFIN_UDP_PORT}:7359/udp
 
     volumes:
       - ${HOMELAB_DATA_DIR}/jellyfin/config:/config
@@ -25,6 +25,9 @@ services:
 
     env_file:
         - .env
+
+    environment:
+      TZ: ${TZ}
 
     restart: unless-stopped
 

@@ -18,10 +18,10 @@ The goal of this homelab is to run core services locally with proper DNS, revers
 | Service                                               | Description                                          | Dashboard Port   | Sub Domain        |
 | ----------------------------------------------------- | ---------------------------------------------------- | ---------------- | ----------------- |
 | [Immich](./service/immich/)                           | Self-hosted photo and video backup solution          | `8200`           | immich.homelab    |
-| [Jellyfin](./service/jellyfin/)                       | Self-hosted media solution                           | `8220`           | jellyfin.homelab  |
+| [Jellyfin](./service/jellyfin/)                       | Self-hosted media solution                           | `8220`, `8221`   | jellyfin.homelab  |
 | [Nextcloud](./service/nextcloud/)                     | Self-hosted cloud storage and collaboration platform | `8240`, `8241`   | nextcloud.homelab |
 
-## Tools and Utilities (8400 to 8600)
+### Tools and Utilities (8400 to 8600)
 
 | Service                                               | Description                                          | Dashboard Port   | Sub Domain        |
 | ----------------------------------------------------- | ---------------------------------------------------- | ---------------- | ----------------- |
