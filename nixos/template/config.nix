@@ -55,6 +55,7 @@
   environment.variables = {
     HOMELAB_CONFIG_DIR="$HOME/Homelab";
     HOMELAB_DATA_DIR="$HOME/Data";
+    TZ="Asia/Kolkata";
   };
 
   # SUID Wrappers
