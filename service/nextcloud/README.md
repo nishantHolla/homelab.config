@@ -4,15 +4,6 @@
 
 - Create `.env` file with the following values
 ```bash
-# Port number for the dashboard
-PORT=
-
-# Port number for collabora
-COLLABORA_PORT=
-
-# Time zone (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
-TZ=
-
 # MySQL host name (can be db)
 MYSQL_HOST=
 
@@ -35,4 +26,6 @@ REDIS_HOST=
 NEXTCLOUD_TRUSTED_DOMAINS=
 ```
 
-- Visit `http://<homelab-ip:<PORT>` after `docker compose up` to create admin account
+- Run `docker compose up`
+
+- Visit `http://<homelab-ip:<NEXTCLOUD_PORT>` to create admin account

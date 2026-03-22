@@ -10,6 +10,7 @@ services:
       - ${HOMELAB_DATA_DIR}/nextcloud/db:/var/lib/mysql
 
     environment:
+      TZ: ${TZ}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: nextcloud
       MYSQL_USER: nextcloud
@@ -39,9 +40,10 @@ services:
       - ${COLLABORA_PORT}:9980
 
     environment:
-      - aliasgroup1=http://${NEXTCLOUD_TRUSTED_DOMAINS}
-      - DONT_GEN_SSL_CERT=YES
-      - extra_params=--o:ssl.enable=false --o:ssl.termination=true
+      TZ: ${TZ}
+      aliasgroup1: http://${NEXTCLOUD_TRUSTED_DOMAINS}
+      DONT_GEN_SSL_CERT: YES
+      extra_params: --o:ssl.enable=false --o:ssl.termination=true
 
     restart: unless-stopped
 
@@ -54,7 +56,7 @@ services:
     container_name: nextcloud
 
     ports:
-      - ${PORT}:80
+      - ${NEXTCLOUD_PORT}:80
 
     volumes:
       - ${HOMELAB_DATA_DIR}/nextcloud/data:/var/www/html/data
