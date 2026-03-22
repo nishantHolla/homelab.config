@@ -1,0 +1,21 @@
+name: stirling
+
+services:
+  stirling-pdf:
+    image: stirlingtools/stirling-pdf:latest
+
+    container_name: stirling
+
+    ports:
+      - ${STIRLING_PORT}:8080
+
+    volumes:
+      - ${HOMELAB_DATA_DIR}/stirling/data:/configs
+
+    environment:
+      TZ: ${TZ}
+
+    healthcheck:
+      disable: false
+
+    restart: unless-stopped
