@@ -8,7 +8,7 @@ services:
 
     ports:
       - 80:80/tcp
-      - ${PORT}:81/tcp
+      - ${NPM_PORT}:81/tcp
       - 443:443/tcp
 
     volumes:
@@ -17,6 +17,9 @@ services:
 
     env_file:
       - .env
+
+    environment:
+      TZ: ${TZ}
 
     restart: unless-stopped
 
