@@ -1,0 +1,24 @@
+name: navidrome
+
+services:
+  navidrome:
+    image: deluan/navidrome:latest
+
+    container_name: navidrome
+
+    user: "${HOMELAB_UID}:${HOMELAB_GID}"
+
+    ports:
+      - ${NAVIDROME_PORT}:4533
+
+    volumes:
+      - ${HOMELAB_DATA_DIR}/navidrome/data:/data
+      - ${HOMELAB_DATA_DIR}/navidrome/music:/music:ro
+
+    environment:
+      TZ: ${TZ}
+
+    restart: unless-stopped
+
+    healthcheck:
+      disable: false
