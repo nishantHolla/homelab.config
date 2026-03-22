@@ -4,12 +4,6 @@
 
 - Create `.env` file with the following values
 ```bash
-# Port number for the dashboard
-PORT=
-
-# Time zone (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
-TZ=
-
 # Version of immich to use (can be v2)
 IMMICH_VERSION=
 
@@ -23,4 +17,6 @@ DB_USERNAME=
 DB_DATABASE_NAME=
 ```
 
-- Visit `http://<homelab-ip>:<PORT>` after `docker compose up` to create admin account
+- Run `docker compose up`
+
+- Visit `http://<homelab-ip>:<IMMICH_PORT>` to create admin account

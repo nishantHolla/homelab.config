@@ -7,7 +7,7 @@ services:
     container_name: immich_server
 
     ports:
-      - ${PORT}:2283/tcp
+      - ${IMMICH_PORT}:2283/tcp
 
     volumes:
       - ${HOMELAB_DATA_DIR}/immich/library:/data
@@ -15,6 +15,9 @@ services:
 
     env_file:
       - .env
+
+    environment:
+      TZ: ${TZ}
 
     depends_on:
       - redis
@@ -45,6 +48,7 @@ services:
       - ${HOMELAB_DATA_DIR}/immich/pgdata:/var/lib/postgresql/data
 
     environment:
+      TZ: ${TZ}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_DB: ${DB_DATABASE_NAME}
