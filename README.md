@@ -26,7 +26,7 @@ The goal of this homelab is to run core services locally with proper DNS, revers
 | Service                                               | Description                                          | Dashboard Port   | Sub Domain        |
 | ----------------------------------------------------- | ---------------------------------------------------- | ---------------- | ----------------- |
 | [ConvertX](./service/convertx/)                       | Self-hosted file conversion service                  | `8400`           | convert.homelab   |
-| [Stirling](./service/Stirling)                        | Self-hosted PDF toolkit                              | `8420`           | pdf.homelab       |
+| [Stirling](./service/stirling/)                       | Self-hosted PDF toolkit                              | `8420`           | pdf.homelab       |
 
 ## Hardware
 
