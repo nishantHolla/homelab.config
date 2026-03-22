@@ -13,6 +13,7 @@
       modules = [
         ./template/config.nix
         ./template/packages.nix
+        ./template/ports.nix
         ./template/hardware.nix
       ];
     };
