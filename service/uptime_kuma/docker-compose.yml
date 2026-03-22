@@ -7,17 +7,16 @@ services:
     container_name: uptime-kuma
 
     ports:
-      - "${PORT}:3001"
+      - "${UPTIME_KUMA_PORT}:3001"
 
     volumes:
-      - ${HOMELAB_DATA_DIR}/uptime_kuma/data:/app/data  # Configuring persistent storage
+      - ${HOMELAB_DATA_DIR}/uptime_kuma/data:/app/data
 
     env_file:
       - .env
 
     environment:
-      - TZ=${TZ}
-      - UMASK=${UMASK}
+      TZ: ${TZ}
 
     networks:
       - kuma_network
