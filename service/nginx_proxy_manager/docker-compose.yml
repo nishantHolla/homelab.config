@@ -15,9 +15,6 @@ services:
       - ${HOMELAB_DATA_DIR}/npm/data:/data
       - ${HOMELAB_DATA_DIR}/npm/letsencrypt:/etc/letsencrypt
 
-    env_file:
-      - .env
-
     environment:
       TZ: ${TZ}
 
