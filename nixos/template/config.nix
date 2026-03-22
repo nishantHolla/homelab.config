@@ -55,6 +55,8 @@
   environment.variables = {
     HOMELAB_CONFIG_DIR="$HOME/Homelab";
     HOMELAB_DATA_DIR="$HOME/Data";
+    HOMELAB_UID="1000";
+    HOMELAB_GID="100";
     TZ="Asia/Kolkata";
   };
 
