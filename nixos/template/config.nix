@@ -53,6 +53,7 @@
 
   # Variables
   environment.variables = {
+    SOPS_AGE_KEY_FILE="$HOME/Sops/age/keys.txt";
     HOMELAB_CONFIG_DIR="$HOME/Homelab";
     HOMELAB_DATA_DIR="$HOME/Data";
     HOMELAB_UID="1000";
