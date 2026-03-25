@@ -67,7 +67,7 @@ def up(args: list[str]) -> Result:
 
     _, rc, stderr = utils.runner.run(
         "up",
-        f"docker compose -f {service_compose_file} up -d",
+        f"docker compose -f {service_compose_file} up",
         capture=False,
         critical=True,
         env=env,
