@@ -48,6 +48,7 @@
   programs.zsh.enable = true;
   programs.zsh.shellInit = ''
     export PATH="$PATH:$HOMELAB_DIR/bin"
+    export SOPS_AGE_KEY_FILE="$HOMELAB_SOPS_DIR/age/keys.txt"
   '';
 
 
