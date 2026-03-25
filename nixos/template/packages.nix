@@ -10,6 +10,7 @@
     git
     neovim
     python313
+    python313Packages.pyyaml
     sops
     tmux
     wget
