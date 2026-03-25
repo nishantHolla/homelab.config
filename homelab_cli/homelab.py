@@ -10,13 +10,13 @@ if __name__ == "__main__":
     program = args.pop(0)
 
     if len(args) == 0:
-        utils.io.info("system", u.SYSTEM_USAGE)
+        utils.io.info("system", u.HOMELAB_USAGE)
         exit(1)
 
     command = args.pop(0)
 
     if command == "help":
-        utils.io.info("system", u.SYSTEM_USAGE)
+        utils.io.info("system", u.HOMELAB_USAGE)
 
     elif command == "nixos":
         from commands import nixos

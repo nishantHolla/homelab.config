@@ -1,5 +1,5 @@
-SYSTEM_USAGE = """
-Usage: system <command> <sub-command> [..arguments]
+HOMELAB_USAGE = """
+Usage: homelab <command> <sub-command> [..arguments]
 
 command:
 
@@ -15,7 +15,7 @@ command:
 """
 
 NIXOS_USAGE = """
-Usage: system nixos <sub-command> [..arguments]
+Usage: homelab nixos <sub-command> [..arguments]
 
 sub-command:
 
