@@ -21,7 +21,6 @@
 
     ## Tools and Utilities
 
-    CONVERTX_PORT="8400";
     STIRLING_PORT="8420";
   };
 }

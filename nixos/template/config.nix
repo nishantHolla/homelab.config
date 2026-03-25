@@ -41,7 +41,15 @@
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" ];
     packages = with pkgs; [ ];
+    shell = pkgs.zsh;
   };
+
+  # Zsh
+  programs.zsh.enable = true;
+  programs.zsh.shellInit = ''
+    export PATH="$PATH:$HOMELAB_DIR/bin"
+  '';
+
 
   # Packages
   environment.systemPackages = with pkgs; [
@@ -54,7 +62,7 @@
   # Variables
   environment.variables = {
     SOPS_AGE_KEY_FILE="$HOME/Sops/age/keys.txt";
-    HOMELAB_CONFIG_DIR="$HOME/Homelab";
+    HOMELAB_DIR="$HOME/Homelab";
     HOMELAB_DATA_DIR="$HOME/Data";
     HOMELAB_UID="1000";
     HOMELAB_GID="100";
@@ -83,9 +91,7 @@
   # Firewall
   networking.firewall.enable = true;
   networking.firewall.trustedInterfaces = [ "tailscale0" ];
-  networking.firewall.allowedTCPPorts = [
-
-  ];
+  networking.firewall.allowedTCPPorts = [ ];
   networking.firewall.allowedUDPPorts = [ ];
 
   # Garbage collection
