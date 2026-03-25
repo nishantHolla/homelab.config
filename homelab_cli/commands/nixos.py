@@ -72,7 +72,7 @@ def setup() -> Result:
     if not re.search(check, flake, re.DOTALL):
         utils.io.info("setup", "Updating flake file")
 
-        pattern = r"(nixosConfigurations\.template\s*=\s*nixpkgs\.lib\.nixosSystem\s*\{\s*--START--.*?\};)\s*--END--"
+        pattern = r"(nixosConfigurations\.template\s*=\s*nixpkgs\.lib\.nixosSystem\s*\{\s*##\s*--START--.*?\};)\s*##\s*--END--"
         match = re.search(pattern, flake, re.DOTALL)
 
         if match:
