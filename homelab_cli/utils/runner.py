@@ -4,7 +4,12 @@ import subprocess
 
 
 def run(
-    author: str, command: list[str] | str, critical=False, capture=False, silent=False
+    author: str,
+    command: list[str] | str,
+    critical=False,
+    capture=False,
+    silent=False,
+    env=None,
 ) -> tuple[str, int, str]:
 
     if not silent:
@@ -12,7 +17,7 @@ def run(
         utils.io.info(author, f"Running {command_str}")
 
     result = subprocess.run(
-        command, capture_output=capture, text=True, check=False, shell=True
+        command, capture_output=capture, text=True, check=False, shell=True, env=env
     )
 
     if result.returncode and critical:

@@ -32,3 +32,23 @@ sub-command:
 
         Switch to new configuration by rebuilding using nixos.
 """
+
+SERVICE_USAGE = """
+Usage: homelab service <sub-command> [..arguments]
+
+sub-command:
+
+    help:
+
+        Print the help message and exit.
+
+    up <service_name?>:
+
+        Prepare environment for the service and starts up the given service
+        Leave service_name blank to start all services.
+
+    down <service_name?>:
+
+        Shutdown the given service.
+        Leave service_name blank to stop all services.
+"""

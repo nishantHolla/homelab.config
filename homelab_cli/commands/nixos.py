@@ -160,6 +160,6 @@ def run(args: list[str]) -> int:
         utils.io.error(
             "nixos",
             f"Unknown sub-command {sub_command}\n"
-            "Run 'system nixos help' for list of all sub-commands",
+            "Run 'homelab nixos help' for list of all sub-commands",
         )
         return 1
