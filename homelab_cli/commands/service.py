@@ -24,7 +24,6 @@ def _load_secrets(service_name: str) -> tuple[Result, dict[str, str]]:
         f"sops -d {service_secret}",
         capture=True,
         critical=False,
-        silent=True,
     )
 
     if rc != 0:
@@ -66,9 +65,8 @@ def up(args: list[str]) -> Result:
     _, rc, stderr = utils.runner.run(
         "up",
         f"docker compose -f {service_compose_file} up -d",
-        capture=True,
+        capture=False,
         critical=True,
-        silent=True,
         env=env,
     )
     if rc != 0:
@@ -108,9 +106,8 @@ def down(args: list[str]) -> Result:
     _, rc, stderr = utils.runner.run(
         "down",
         f"docker compose -f {service_compose_file} down",
-        capture=True,
+        capture=False,
         critical=True,
-        silent=True,
     )
     if rc != 0:
         return Result(5, f"Failed to shutdown service {service_name}: {stderr}")
