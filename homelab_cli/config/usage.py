@@ -12,6 +12,8 @@ command:
         Control system-level configuration.
 
     service:
+
+        Control services of the homelab.
 """
 
 NIXOS_USAGE = """
