@@ -10,7 +10,6 @@
 
     ## Storage and Cloud
 
-    IMMICH_PORT="8200";
     NAVIDROME_PORT="8220";
     JELLYFIN_TCP_PORT="8240";
     JELLYFIN_UDP_PORT="8241";
