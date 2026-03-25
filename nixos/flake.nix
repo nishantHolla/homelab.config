@@ -17,6 +17,7 @@
         ./template/hardware.nix
 
         ./template/service/convertx.nix
+        ./template/service/adguard.nix
       ];
     }; ## --END--
 

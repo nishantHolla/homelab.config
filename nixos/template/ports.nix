@@ -6,8 +6,6 @@
     ## Core services
 
     NPM_PORT="81";
-    ADGUARD_PORT="8000";
-    ADGUARD_ADMIN_PORT="8001";
     UPTIME_KUMA_PORT="8020";
 
     ## Storage and Cloud
