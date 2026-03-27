@@ -1,4 +1,4 @@
-# Nextclound service
+# Nextcloud service
 
 ## Installation
 
