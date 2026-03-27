@@ -8,11 +8,6 @@
     NPM_PORT="81";
     UPTIME_KUMA_PORT="8020";
 
-    ## Storage and Cloud
-
-    NEXTCLOUD_PORT="8260";
-    COLLABORA_PORT="8261";
-
     ## Tools and Utilities
 
     STIRLING_PORT="8420";

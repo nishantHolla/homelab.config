@@ -21,6 +21,7 @@
         ./template/service/immich.nix
         ./template/service/jellyfin.nix
         ./template/service/navidrome.nix
+        ./template/service/nextcloud.nix
       ];
     }; ## --END--
 
