@@ -16,6 +16,6 @@ services:
       HTTP_ALLOWED: ${CONVERTX_HTTP_ALLOWED}
       ALLOW_UNAUTHENTICATED: ${CONVERTX_ALLOW_UNAUTHENTICATED}
       ACCOUNT_REGISTRATION: ${CONVERTX_ACCOUNT_REGISTRATION}
-      ## JWT_SECRET: <secret>
+      JWT_SECRET: ${CONVERTX_JWT_SECRET} ## defined in secret/convertx.yaml
 
     restart: unless-stopped
