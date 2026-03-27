@@ -17,7 +17,7 @@ services:
       TZ: ${TZ}
       DB_PASSWORD: ${IMMICH_DB_PASSWORD}
       DB_USERNAME: ${IMMICH_DB_USERNAME}
-      DB_DATABASE_NAME: ${IMMICH_DATABASE_NAME}
+      DB_DATABASE_NAME: ${IMMICH_DB_DATABASE_NAME}
 
     depends_on:
       - redis
