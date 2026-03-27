@@ -11,8 +11,6 @@
     ## Storage and Cloud
 
     NAVIDROME_PORT="8220";
-    JELLYFIN_TCP_PORT="8240";
-    JELLYFIN_UDP_PORT="8241";
     NEXTCLOUD_PORT="8260";
     COLLABORA_PORT="8261";
 

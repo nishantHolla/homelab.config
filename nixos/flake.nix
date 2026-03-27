@@ -19,6 +19,7 @@
         ./template/service/adguard.nix
         ./template/service/convertx.nix
         ./template/service/immich.nix
+        ./template/service/jellyfin.nix
       ];
     }; ## --END--
 
