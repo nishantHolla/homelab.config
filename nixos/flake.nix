@@ -13,7 +13,6 @@
       modules = [
         ./template/config.nix
         ./template/packages.nix
-        ./template/ports.nix
         ./template/hardware.nix
 
         ./template/service/adguard.nix
@@ -24,6 +23,7 @@
         ./template/service/nextcloud.nix
         ./template/service/nginx_proxy_manager.nix
         ./template/service/stirling.nix
+        ./template/service/uptime_kuma.nix
       ];
     }; ## --END--
 
