@@ -9,6 +9,5 @@
 
     ## Tools and Utilities
 
-    STIRLING_PORT="8420";
   };
 }

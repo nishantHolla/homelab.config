@@ -23,6 +23,7 @@
         ./template/service/navidrome.nix
         ./template/service/nextcloud.nix
         ./template/service/nginx_proxy_manager.nix
+        ./template/service/stirling.nix
       ];
     }; ## --END--
 
