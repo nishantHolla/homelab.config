@@ -10,7 +10,6 @@
 
     ## Storage and Cloud
 
-    NAVIDROME_PORT="8220";
     NEXTCLOUD_PORT="8260";
     COLLABORA_PORT="8261";
 

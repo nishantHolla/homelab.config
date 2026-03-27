@@ -20,6 +20,7 @@
         ./template/service/convertx.nix
         ./template/service/immich.nix
         ./template/service/jellyfin.nix
+        ./template/service/navidrome.nix
       ];
     }; ## --END--
 
