@@ -2,6 +2,6 @@
 
 ## Installation
 
-- Run `docker compose up`
+- Run `homelab service up jellyfin`
 
-- Visit `http://<homelab-ip:<JELLYFIN_PORT>` to create the admin account
+- Visit `http://<homelab-ip>:<JELLYFIN_PORT>` to create the admin account

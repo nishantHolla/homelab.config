@@ -15,16 +15,7 @@ services:
     volumes:
       - ${HOMELAB_DATA_DIR}/jellyfin/config:/config
       - ${HOMELAB_DATA_DIR}/jellyfin/cache:/cache
-      - type: bind
-        source: ${HOMELAB_DATA_DIR}/jellyfin/media
-        target: /media
-      - type: bind
-        source: ${HOMELAB_DATA_DIR}/jellyfin/media2
-        target: /media2
-        read_only: true
-
-    env_file:
-        - .env
+      - ${HOMELAB_DATA_DIR}/jellyfin/media:/media:ro
 
     environment:
       TZ: ${TZ}
