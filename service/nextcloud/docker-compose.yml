@@ -19,7 +19,17 @@ services:
     restart: unless-stopped
 
     healthcheck:
-      disable: false
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u${NEXTCLOUD_MYSQL_USER}", "-p${NEXTCLOUD_MYSQL_PASSWORD}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 1m
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   redis:
     image: redis:alpine
@@ -29,7 +39,17 @@ services:
     restart: unless-stopped
 
     healthcheck:
-      disable: false
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 1m
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   collabora:
     image: collabora/code:latest
@@ -49,6 +69,19 @@ services:
 
     cap_add:
       - MKNOD
+
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:9980/hosting/discovery"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 1m
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   nextcloud:
     image: nextcloud:latest
@@ -78,4 +111,14 @@ services:
     restart: unless-stopped
 
     healthcheck:
-      disable: false
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1/status.php"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 1m
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
