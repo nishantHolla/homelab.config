@@ -19,3 +19,16 @@ services:
       JWT_SECRET: ${CONVERTX_JWT_SECRET} ## defined in secret/convertx.yaml
 
     restart: unless-stopped
+
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
