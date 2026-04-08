@@ -14,6 +14,7 @@
             pkgs.python313
             pkgs.python313Packages.docker
             pkgs.python313Packages.pyyaml
+            python313Packages.typer
           ];
         };
       }
