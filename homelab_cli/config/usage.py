@@ -53,4 +53,8 @@ sub-command:
 
         Shutdown the given service.
         Leave service_name blank to stop all services.
+
+    list
+
+        List all the services and their status.
 """

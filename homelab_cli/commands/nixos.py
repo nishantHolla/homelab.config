@@ -13,6 +13,9 @@ def setup() -> Result:
     USERNAME = utils.io.get_input("nixos", "Enter username: ")
     ROOT_PATH = Path(utils.io.get_input("nixos", "Enter root path: "))
 
+    if not ROOT_PATH.is_dir():
+        return Result(1, f"root path {ROOT_PATH} not found")
+
     ROOT_CONFIG_DIR = ROOT_PATH / "etc" / "nixos"
     ROOT_HARDWARE_FILE = ROOT_CONFIG_DIR / "hardware-configuration.nix"
 

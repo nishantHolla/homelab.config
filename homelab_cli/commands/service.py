@@ -1,11 +1,14 @@
 import os
 from pathlib import Path
 import yaml
+from typing import List
 
 import utils
+from utils import udocker
+from utils.result import Result
+
 from config import usage as u
 from config import values as v
-from utils.result import Result
 
 
 def _load_secrets(service_name: str) -> tuple[Result, dict[str, str]]:
@@ -46,7 +49,7 @@ def _load_secrets(service_name: str) -> tuple[Result, dict[str, str]]:
     return (Result(0, "Ok"), env)
 
 
-def up(args: list[str]) -> Result:
+def up(args: List[str]) -> Result:
     if len(args) == 0:
         return Result(1, "Not enough args")
 
@@ -91,7 +94,7 @@ def up_all() -> Result:
     return Result(0, "Ok")
 
 
-def down(args: list[str]) -> Result:
+def down(args: List[str]) -> Result:
     if len(args) == 0:
         return Result(1, "Not enough args")
 
@@ -131,7 +134,19 @@ def down_all() -> Result:
     return Result(0, "Ok")
 
 
-def run(args: list[str]) -> int:
+def list() -> Result:
+    for item in v.SERVICE_DIR.iterdir():
+        if not item.is_dir():
+            continue
+
+        services = udocker.get_compose_containers(project_name=str(item))
+        for service in services:
+            print(f"{service['name']}\t{service['status']}")
+
+    return Result(0, "Ok")
+
+
+def run(args: List[str]) -> int:
     if len(args) == 0:
         utils.io.info("service", u.SERVICE_USAGE)
         return 1
