@@ -10,10 +10,10 @@
         pkgs = import nixpkgs { inherit system; };
       in {
         devShells.default = pkgs.mkShell {
-          packages = [
-            pkgs.python313
-            pkgs.python313Packages.docker
-            pkgs.python313Packages.pyyaml
+          packages = with pkgs; [
+            python313
+            python313Packages.docker
+            python313Packages.pyyaml
             python313Packages.typer
           ];
         };
