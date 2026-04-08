@@ -134,14 +134,22 @@ def down_all() -> Result:
     return Result(0, "Ok")
 
 
-def list() -> Result:
+def service_list() -> Result:
+    services_map = udocker.group_compose_containers(
+        udocker.get_compose_containers(), by="project"
+    )
+
     for item in v.SERVICE_DIR.iterdir():
         if not item.is_dir():
             continue
 
-        services = udocker.get_compose_containers(project_name=str(item))
-        for service in services:
-            print(f"{service['name']}\t{service['status']}")
+        if len(services_map[item.name]) == 0:
+            print(f"{item.name}: Not Running")
+            continue
+
+        print(f"{item.name}:")
+        for service in services_map[item.name]:
+            print(f"\t{service['name']}: {service['status']}")
 
     return Result(0, "Ok")
 
@@ -170,6 +178,14 @@ def run(args: List[str]) -> int:
 
         if result.code != 0:
             utils.io.error("down", result.message)
+
+        return result.code
+
+    elif sub_command == "list":
+        result = service_list()
+
+        if result.code != 0:
+            utils.io.error("list", result.message)
 
         return result.code
 

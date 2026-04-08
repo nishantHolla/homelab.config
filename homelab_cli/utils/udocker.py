@@ -1,4 +1,5 @@
 from typing import List, Dict, Optional, TypedDict
+from collections import defaultdict
 import docker
 from docker.models.containers import Container
 
@@ -45,3 +46,14 @@ def get_compose_containers(
         )
 
     return result
+
+
+def group_compose_containers(
+    services: List[ComposeContainerInfo], by: str = "project"
+) -> Dict[str, List[ComposeContainerInfo]]:
+    service_map: Dict[str, List[ComposeContainerInfo]] = defaultdict(list)
+
+    for service in services:
+        service_map[service[by]].append(service)
+
+    return service_map
