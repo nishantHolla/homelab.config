@@ -61,8 +61,11 @@ def _load_secrets(service_name: str) -> tuple[Result, dict[str, str]]:
 
 @app.command(help=u.SERVICE_TYPER_HELP["up"])
 def up(
-    service_name: str = typer.Argument(..., shell_complete=complete_services),
+    service_name: str = typer.Argument("", shell_complete=complete_services),
 ) -> Result:
+    if service_name == "":
+        return up_all()
+
     service_root = v.SERVICE_DIR / service_name
 
     if not service_root.is_dir():
@@ -105,8 +108,11 @@ def up_all() -> Result:
 
 @app.command(help=u.SERVICE_TYPER_HELP["down"])
 def down(
-    service_name: str = typer.Argument(..., shell_complete=complete_services),
+    service_name: str = typer.Argument("", shell_complete=complete_services),
 ) -> Result:
+    if service_name == "":
+        return down_all()
+
     service_root = v.SERVICE_DIR / service_name
 
     if not service_root.is_dir():
