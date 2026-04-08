@@ -139,17 +139,20 @@ def service_list() -> Result:
         udocker.get_compose_containers(), by="project"
     )
 
+    service_list_table: List[List[str]] = [
+        ["Service Name", "Container Count", "Status"]
+    ]
+
     for item in v.SERVICE_DIR.iterdir():
         if not item.is_dir():
             continue
 
-        if len(services_map[item.name]) == 0:
-            print(f"{item.name}: Not Running")
-            continue
+        containers = services_map[item.name]
+        service_list_table.append(
+            [item.name, str(len(containers)), udocker.get_project_status(containers)]
+        )
 
-        print(f"{item.name}:")
-        for service in services_map[item.name]:
-            print(f"\t{service['name']}: {service['status']}")
+    utils.io.table(service_list_table)
 
     return Result(0, "Ok")
 

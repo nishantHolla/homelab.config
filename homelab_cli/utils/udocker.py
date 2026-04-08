@@ -57,3 +57,16 @@ def group_compose_containers(
         service_map[service[by]].append(service)
 
     return service_map
+
+
+def get_project_status(containers: List[ComposeContainerInfo]) -> str:
+    statuses = {c["status"] for c in containers}
+
+    if statuses == {"running"}:
+        return "running"
+    elif "running" in statuses:
+        return "partial"
+    elif statuses.issubset({"exited", "created", "dead"}):
+        return "stopped"
+    else:
+        return "unknown"
