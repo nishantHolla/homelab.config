@@ -1,14 +1,24 @@
 import os
 from pathlib import Path
-import yaml
 from typing import List
 
+import typer
 import utils
+import yaml
+from config import usage as u
+from config import values as v
 from utils import udocker
 from utils.result import Result
 
-from config import usage as u
-from config import values as v
+from .completion import complete_services
+
+app = typer.Typer()
+
+
+@app.command(help=u.SERVICE_TYPER_HELP["help"])
+def help() -> Result:
+    utils.io.info("service", u.SERVICE_USAGE)
+    return Result(0, "Ok")
 
 
 def _load_secrets(service_name: str) -> tuple[Result, dict[str, str]]:
@@ -49,11 +59,10 @@ def _load_secrets(service_name: str) -> tuple[Result, dict[str, str]]:
     return (Result(0, "Ok"), env)
 
 
-def up(args: List[str]) -> Result:
-    if len(args) == 0:
-        return Result(1, "Not enough args")
-
-    service_name = args.pop(0)
+@app.command(help=u.SERVICE_TYPER_HELP["up"])
+def up(
+    service_name: str = typer.Argument(..., shell_complete=complete_services),
+) -> Result:
     service_root = v.SERVICE_DIR / service_name
 
     if not service_root.is_dir():
@@ -87,18 +96,17 @@ def up_all() -> Result:
         if not item.is_dir():
             continue
 
-        result = up([str(item)])
+        result = up(str(item))
         if result.code != 0:
             return result
 
     return Result(0, "Ok")
 
 
-def down(args: List[str]) -> Result:
-    if len(args) == 0:
-        return Result(1, "Not enough args")
-
-    service_name = args.pop(0)
+@app.command(help=u.SERVICE_TYPER_HELP["down"])
+def down(
+    service_name: str = typer.Argument(..., shell_complete=complete_services),
+) -> Result:
     service_root = v.SERVICE_DIR / service_name
 
     if not service_root.is_dir():
@@ -127,13 +135,14 @@ def down_all() -> Result:
         if not item.is_dir():
             continue
 
-        result = down([str(item)])
+        result = down(str(item))
         if result.code != 0:
             return result
 
     return Result(0, "Ok")
 
 
+@app.command(name="list", help=u.SERVICE_TYPER_HELP["list"])
 def service_list() -> Result:
     services_map = udocker.group_compose_containers(
         udocker.get_compose_containers(), by="project"
@@ -165,11 +174,12 @@ def run(args: List[str]) -> int:
     sub_command = args.pop(0)
 
     if sub_command == "help":
-        utils.io.info("service", u.SERVICE_USAGE)
-        return 0
+        result = help()
+
+        return result.code
 
     elif sub_command == "up":
-        result = up_all() if len(args) == 0 else up(args)
+        result = up_all() if len(args) == 0 else up(args.pop(0))
 
         if result.code != 0:
             utils.io.error("up", result.message)
@@ -177,7 +187,7 @@ def run(args: List[str]) -> int:
         return result.code
 
     elif sub_command == "down":
-        result = down_all() if len(args) == 0 else down(args)
+        result = down_all() if len(args) == 0 else down(args.pop(0))
 
         if result.code != 0:
             utils.io.error("down", result.message)

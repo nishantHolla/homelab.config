@@ -34,6 +34,11 @@ sub-command:
 
         Switch to new configuration by rebuilding using nixos.
 """
+NIXOS_TYPER_HELP = {
+    "help": "Show the help message for nixos command",
+    "setup": "Perform setup actions for the system",
+    "switch": "Switch to new configuration by rebuilding using nixos",
+}
 
 SERVICE_USAGE = """
 Usage: homelab service <sub-command> [..arguments]
@@ -58,3 +63,10 @@ sub-command:
 
         List all the services and their status.
 """
+
+SERVICE_TYPER_HELP = {
+    "help": "Show the help message for service command",
+    "up": "Start a service",
+    "down": "Stop a service",
+    "list": "List all the services and their status",
+}

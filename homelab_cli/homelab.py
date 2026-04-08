@@ -1,11 +1,19 @@
 #!/usr/bin/env python
 
-import utils
-from config import usage as u
-
 import sys
 
+import typer
+import utils
+from commands import nixos, service
+from config import usage as u
+
+app = typer.Typer()
+app.add_typer(nixos.app, name="nixos")
+app.add_typer(service.app, name="service")
+
 if __name__ == "__main__":
+    app()
+
     args = sys.argv[:]
     program = args.pop(0)
 
@@ -19,15 +27,11 @@ if __name__ == "__main__":
         utils.io.info("system", u.HOMELAB_USAGE)
 
     elif command == "nixos":
-        from commands import nixos
-
         ec = nixos.run(args)
         if ec:
             exit(ec)
 
     elif command == "service":
-        from commands import service
-
         ec = service.run(args)
         if ec:
             exit(ec)

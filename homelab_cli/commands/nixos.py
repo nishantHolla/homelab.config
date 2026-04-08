@@ -2,12 +2,22 @@ import re
 import socket
 from pathlib import Path
 
+import typer
 import utils
 from config import usage as u
 from config import values as v
 from utils.result import Result
 
+app = typer.Typer()
 
+
+@app.command(help=u.NIXOS_TYPER_HELP["help"])
+def help() -> Result:
+    utils.io.info("nixos", u.NIXOS_USAGE)
+    return Result(0, "Ok")
+
+
+@app.command(help=u.NIXOS_TYPER_HELP["setup"])
 def setup() -> Result:
     HOSTNAME = utils.io.get_input("nixos", "Enter hostname: ")
     USERNAME = utils.io.get_input("nixos", "Enter username: ")
@@ -116,6 +126,7 @@ def setup() -> Result:
     return Result(0, "Ok")
 
 
+@app.command(help=u.NIXOS_TYPER_HELP["switch"])
 def switch() -> Result:
     HOSTNAME = socket.gethostname()
     if not HOSTNAME:
@@ -140,8 +151,9 @@ def run(args: list[str]) -> int:
     sub_command = args.pop(0)
 
     if sub_command == "help":
-        utils.io.info("nixos", u.NIXOS_USAGE)
-        return 0
+        result = help()
+
+        return result.code
 
     elif sub_command == "setup":
         result = setup()
