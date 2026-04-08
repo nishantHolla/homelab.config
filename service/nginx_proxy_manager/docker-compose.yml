@@ -1,4 +1,4 @@
-name: nginx-proxy-manager
+name: nginx_proxy_manager
 
 services:
   nginx-proxy-manager:

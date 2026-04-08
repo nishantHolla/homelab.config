@@ -1,4 +1,4 @@
-name: adguardhome
+name: adguard
 
 services:
   adguardhome:

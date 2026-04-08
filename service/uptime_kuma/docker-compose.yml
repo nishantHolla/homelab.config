@@ -1,4 +1,4 @@
-name: uptime-kuma
+name: uptime_kuma
 
 services:
   uptime-kuma:
