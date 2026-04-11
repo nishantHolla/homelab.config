@@ -19,9 +19,13 @@
         ./template/service/convertx.nix
         ./template/service/immich.nix
         ./template/service/jellyfin.nix
+        ./template/service/lidarr.nix
         ./template/service/navidrome.nix
         ./template/service/nextcloud.nix
         ./template/service/nginx_proxy_manager.nix
+        ./template/service/prowlarr.nix
+        ./template/service/radarr.nix
+        ./template/service/sonarr.nix
         ./template/service/stirling.nix
         ./template/service/uptime_kuma.nix
       ];
