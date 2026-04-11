@@ -1,0 +1,30 @@
+name: lidarr
+
+services:
+  lidarr:
+    image: ghcr.io/hotio/lidarr:latest
+
+    container_name: lidarr
+
+    hostname: lidarr.internal
+
+    ports:
+      - ${LIDARR_PORT}:8686
+
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${HOEMLAB_DATA_DIR}/lidarr:/config
+      - ${HOMELAB_DATA_DIR}/Library:/data
+
+    environment:
+      PUID: ${HOMELAB_UID}
+      PGID: ${HOMELAB_GID}
+      TZ: ${TZ}
+
+    restart: unless-stopped
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

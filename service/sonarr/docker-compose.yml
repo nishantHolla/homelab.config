@@ -1,0 +1,30 @@
+name: sonarr
+
+services:
+  sonarr:
+    image: ghcr.io/hotio/sonarr:latest
+
+    container_name: sonarr
+
+    hostname: sonarr.internal
+
+    ports:
+      - ${SONARR_PORT}:8989
+
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${HOMELAB_DATA_DIR}/sonarr:/config
+      - ${HOMELAB_DATA_DIR}/Library:/data
+
+    environment:
+      PUID: ${HOMELAB_UID}
+      PGID: ${HOMELAB_GID}
+      TZ: ${TZ}
+
+    restart: unless-stopped
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

@@ -3,6 +3,6 @@
 
 {
   environment.variables = {
-    LIDAR_PORT="8660";
+    PROWLARR_PORT="8660";
   };
 }

@@ -1,0 +1,29 @@
+name: prowlarr
+
+services:
+  prowlarr:
+    image: ghcr.io/hotio/prowlarr:latest
+
+    container_name: prowlarr
+
+    hostname: prowlarr.internal
+
+    ports:
+      - ${PROWLARR_PORT}:9696
+
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${HOMELAB_DATA_DIR}/prowlarr:/config
+
+    environment:
+      PUID: ${HOMELAB_UID}
+      PGID: ${HOMELAB_GID}
+      TZ: ${TZ}
+
+    restart: unless-stopped
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
