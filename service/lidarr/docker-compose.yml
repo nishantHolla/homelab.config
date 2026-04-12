@@ -13,7 +13,7 @@ services:
 
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${HOEMLAB_DATA_DIR}/lidarr:/config
+      - ${HOMELAB_DATA_DIR}/lidarr:/config
       - ${HOMELAB_DATA_DIR}/Library:/data
 
     environment:
