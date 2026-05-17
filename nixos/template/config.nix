@@ -37,7 +37,7 @@
   services.xserver.enable = false;
 
   # Users
-  users.users.admin = {
+  users.users.$TEMPLATE_USERNAME = {
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" ];
     packages = with pkgs; [ ];

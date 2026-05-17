@@ -73,6 +73,12 @@ def setup() -> Result:
         if result.code != 0:
             return Result(1, f"Failed to update config file. Error: {result.message}")
 
+        result = utils.file.find_and_replace(
+            HOST_CONFIG_FILE, "$TEMPLATE_USERNAME", USERNAME
+        )
+        if result.code != 0:
+            return Result(1, f"Failed to update config file. Error: {result.message}")
+
     utils.io.info("setup", f"Checking if flake file has {HOSTNAME}")
     try:
         with open(v.NIXOS_FLAKE_FILE, "r") as file:
