@@ -28,12 +28,12 @@ zpool create -f \
   -O compression=zstd \
   -O mountpoint=none \
   -O atime=off \
-  rpool /dev/<nixos-partition>
+  zpool /dev/<nixos-partition>
 
-zfs create -o mountpoint=legacy rpool/root
-zfs create -o mountpoint=legacy rpool/nix
-zfs create -o mountpoint=legacy rpool/var
-zfs create -o mountpoint=legacy rpool/home
+zfs create -o mountpoint=legacy zpool/root
+zfs create -o mountpoint=legacy zpool/nix
+zfs create -o mountpoint=legacy zpool/var
+zfs create -o mountpoint=legacy zpool/home
 
 mkdir -p /mnt
 mount -t zfs zpool/root /mnt
@@ -55,4 +55,28 @@ mkswap /dev/<swap-parition>
 mkdir /mnt/boot
 mount /dev/<boot-parition> /mnt/boot
 swapon /dev/<swap-parition>
+```
+
+- Clone `Homelab` repository
+```bash
+cd /mnt
+git clone https://github.com/nishantHolla/homelab.config Homelab
+cd Homelab/cli
+```
+
+- Setup nixos using the cli
+```bash
+nix --experimental-features "nix-command flakes" develop
+python homelab.py nixos setup
+```
+
+- Shutdown and remove the install medium
+
+- Power on the system and login with the user account
+
+- Bring homelab to home directory
+```bash
+sudo mv /Homelab .
+sudo chown -R $(whoami) Homelab
+cd System.cli
 ```
