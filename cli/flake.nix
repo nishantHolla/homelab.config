@@ -1,5 +1,5 @@
 {
-  description = "Shell for homelab_cli";
+  description = "Shell for homelab";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
