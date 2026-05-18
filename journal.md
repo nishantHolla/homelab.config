@@ -20,28 +20,29 @@ fdisk /dev/<disk-name>
 
 - Setup zfs on `nixos` partition
 ```bash
-zpool create -f \
-  -o ashift=12 \
+zpool create \
   -O encryption=on \
   -O keyformat=passphrase \
   -O keylocation=prompt \
   -O compression=zstd \
   -O mountpoint=none \
-  -O atime=off \
-  zpool /dev/<nixos-partition>
+  -O xattr=sa \
+  -O acltype=posixacl \
+  -o ashift=12 \
+  rpool /dev/<nixos-partition>
 
-zfs create -o mountpoint=legacy zpool/root
-zfs create -o mountpoint=legacy zpool/nix
-zfs create -o mountpoint=legacy zpool/var
-zfs create -o mountpoint=legacy zpool/home
+zfs create -o mountpoint=legacy rpool/root
+zfs create -o mountpoint=legacy rpool/nix
+zfs create -o mountpoint=legacy rpool/var
+zfs create -o mountpoint=legacy rpool/home
 
 mkdir -p /mnt
-mount -t zfs zpool/root /mnt
+mount -t zfs rpool/root /mnt
 
 mkdir /mnt/nix /mnt/var /mnt/home
-mount -t zfs zpool/nix /mnt/nix
-mount -t zfs zpool/var /mnt/var
-mount -t zfs zpool/home /mnt/home
+mount -t zfs rpool/nix /mnt/nix
+mount -t zfs rpool/var /mnt/var
+mount -t zfs rpool/home /mnt/home
 ```
 
 - Format partitions
