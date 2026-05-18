@@ -67,6 +67,15 @@ def setup() -> Result:
         )
 
         utils.io.info("setup", "Updating config file for host")
+        machine_id, _, _ = utils.runner.run(
+            "setup", "head -c 8 /etc/machine-id", capture=True, critical=True
+        )
+        result = utils.file.find_and_replace(
+            HOST_CONFIG_FILE, "$TEMPLATE_NETWORK_HOST_ID", machine_id
+        )
+        if result.code != 0:
+            return Result(1, f"Failed to update config file. Error: {result.message}")
+
         result = utils.file.find_and_replace(
             HOST_CONFIG_FILE, "$TEMPLATE_HOSTNAME", HOSTNAME
         )

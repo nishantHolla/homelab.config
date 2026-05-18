@@ -6,22 +6,19 @@
 
 {
   # Boot Loader
-  boot.loader.grub.enable = true;
-  boot.loader.grub.zfsSupport = true;
-  boot.loader.grub.efiSupport = true;
-  boot.loader.grub.efiInstallAsRemovable = true;
-  boot.loader.grub.mirroredBoots = [
-    { devices = [ "nodev" ]; path = "/boot"; }
-  ];
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   # ZFS
   boot.supportedFilesystems = [ "zfs" ];
-  boot.zfs.requestEncryptionCredentials = true;
-  boot.zfs.extraPools = [ "rpool" ];
-  networking.hostId = "9b500f6c";
+  boot.zfs.extraPools = [ "zpool" ];
+  boot.zfs.devNodes = "/dev/disk/by-partuuid";
+
   services.zfs.autoScrub.enable = true;
+  services.zfs.trim.enable = true;
 
   # Networking
+  networking.hostId = "$TEMPLATE_NETWORK_HOST_ID";
   networking.hostName = "$TEMPLATE_HOSTNAME";
   networking.networkmanager.enable = true;
 

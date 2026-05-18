@@ -18,6 +18,14 @@ lsblk
 fdisk /dev/<disk-name>
 ```
 
+- Setup variables for disk by partuuid
+```bash
+blkid
+BOOT=/dev/disk/by-partuuid/<id-of-boot-partition>
+SWAP=/dev/disk/by-partuuid/<id-of-swap-partition>
+DISK=/dev/disk/by-partuuid/<id-of-nixos-partition>
+```
+
 - Setup zfs on `nixos` partition
 ```bash
 zpool create \
@@ -29,33 +37,33 @@ zpool create \
   -O xattr=sa \
   -O acltype=posixacl \
   -o ashift=12 \
-  rpool /dev/<nixos-partition>
+  zpool $DISK
 
-zfs create -o mountpoint=legacy rpool/root
-zfs create -o mountpoint=legacy rpool/nix
-zfs create -o mountpoint=legacy rpool/var
-zfs create -o mountpoint=legacy rpool/home
+zfs create -o mountpoint=legacy zpool/root
+zfs create -o mountpoint=legacy zpool/nix
+zfs create -o mountpoint=legacy zpool/var
+zfs create -o mountpoint=legacy zpool/home
 
 mkdir -p /mnt
-mount -t zfs rpool/root /mnt
+mount -t zfs zpool/root /mnt
 
-mkdir /mnt/nix /mnt/var /mnt/home
-mount -t zfs rpool/nix /mnt/nix
-mount -t zfs rpool/var /mnt/var
-mount -t zfs rpool/home /mnt/home
+mkdir -p /mnt /mnt/nix /mnt/var /mnt/home
+mount -t zfs zpool/nix /mnt/nix
+mount -t zfs zpool/var /mnt/var
+mount -t zfs zpool/home /mnt/home
 ```
 
 - Format partitions
 ```bash
-mkfs.fat -F 32 -n boot /dev/<boot-parition>
-mkswap /dev/<swap-parition>
+mkfs.fat -F 32 $BOOT
+mkswap $SWAP
 ```
 
 - Mount partitions
 ```bash
 mkdir /mnt/boot
-mount /dev/<boot-parition> /mnt/boot
-swapon /dev/<swap-parition>
+mount $BOOT /mnt/boot
+swapon $SWAP
 ```
 
 - Clone `Homelab` repository
