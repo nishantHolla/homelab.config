@@ -16,6 +16,8 @@
 
   # ZFS
   boot.supportedFilesystems = [ "zfs" ];
+  boot.zfs.requestEncryptionCredentials = true;
+  boot.zfs.extraPools = [ "rpool" ];
   networking.hostId = "9b500f6c";
   services.zfs.autoScrub.enable = true;
 
