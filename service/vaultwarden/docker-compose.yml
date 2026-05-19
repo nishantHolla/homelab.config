@@ -1,0 +1,26 @@
+name: vaultwarden
+
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+
+    container_name: vaultwarden
+
+    ports:
+      - "${VAULTWARDEN_PORT}:80"
+
+    volumes:
+      - ${HOMELAB_DATA_DIR}/vaultwarden/data:/data
+
+    environment:
+      TZ: ${TZ}
+      UMASK: 0022
+      DOMAIN: "https://vw.domain.tld"
+
+    restart: unless-stopped
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
