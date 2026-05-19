@@ -24,6 +24,7 @@
         ./template/service/nginx_proxy_manager.nix
         ./template/service/stirling.nix
         ./template/service/uptime_kuma.nix
+        ./template/service/vaultwarden.nix
       ];
     }; ## --END--
 
