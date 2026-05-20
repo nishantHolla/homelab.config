@@ -15,6 +15,8 @@
 
     (python313.withPackages (ps: with ps; [
       pyyaml
+      docker
+      typer
     ]))
   ];
 }
