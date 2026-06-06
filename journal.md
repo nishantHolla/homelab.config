@@ -10,23 +10,23 @@ sudo su
 ```
 
 - Setup partitions
-    - `BOOT`: 1GB FAT 32
-    - `swap`: 8GB Linux Swap
-    - `nixos`: nGB Linux Filesystem
+  - `BOOT`: 1GB FAT 32
+  - `SWAP`: 8GB Linux Swap
+  - `DISK`: nGB Linux Filesystem
 ```bash
 lsblk
-fdisk /dev/<disk-name>
+fdisk /dev/{disk-name}
 ```
 
-- Setup variables for disk by partuuid
+- Setup variables for disy by partuuid
 ```bash
 blkid
-BOOT=/dev/disk/by-partuuid/<id-of-boot-partition>
-SWAP=/dev/disk/by-partuuid/<id-of-swap-partition>
-DISK=/dev/disk/by-partuuid/<id-of-nixos-partition>
+BOOT=/dev/disk/by-partuuid/{id-of-BOOT-partition}
+SWAP=/dev/disk/by-partuuid/{id-of-SWAP-partition}
+DISK=/dev/disk/by-partuuid/{id-of-DISK-partition}
 ```
 
-- Setup zfs on `nixos` partition
+- Setup zfs on `DISK` partition
 ```bash
 zpool create \
   -O encryption=on \
@@ -73,7 +73,7 @@ git clone https://github.com/nishantHolla/homelab.config Homelab
 cd Homelab/cli
 ```
 
-- Setup nixos using the cli
+- Setup nixos using cli
 ```bash
 nix --experimental-features "nix-command flakes" develop
 python homelab.py nixos setup
@@ -87,5 +87,10 @@ python homelab.py nixos setup
 ```bash
 sudo mv /Homelab .
 sudo chown -R $(whoami) Homelab
-cd System.cli
+cd Homelab/cli
+```
+
+- Setup Sops
+```bash
+scp -r {Sops-dir} {Homelab-user}@{Homelab-ip-address}:~/Sops
 ```
