@@ -22,6 +22,17 @@ def get_password(author: str, prompt: str) -> str:
     return getpass(f"[INPT] {author}: {prompt}")
 
 
+def get_confirmation(author: str, prompt: str) -> str:
+    prompt += "[y, n] "
+
+    while True:
+        result = get_input(author, prompt)
+        if result.lower() in ["y", "n"]:
+            break
+
+    return result.lower()
+
+
 def table(rows: List[List[str]]) -> None:
     if not rows:
         return

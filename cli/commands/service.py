@@ -64,7 +64,11 @@ def up(
     service_name: str = typer.Argument("", shell_complete=complete_services),
 ) -> Result:
     if service_name == "":
-        return up_all()
+        result = utils.io.get_confirmation("up", "Do you want to start all services?")
+        if result == "y":
+            return up_all()
+        else:
+            return Result(6, "")
 
     service_root = v.SERVICE_DIR / service_name
 
