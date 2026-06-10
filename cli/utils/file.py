@@ -1,5 +1,6 @@
 from pathlib import Path
-from .result import Result, Ok, Err
+
+from .result import Err, Ok, Result
 
 
 def find_and_replace(

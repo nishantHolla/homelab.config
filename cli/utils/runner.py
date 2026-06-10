@@ -1,11 +1,13 @@
-import utils
 import subprocess
 from typing import List, Tuple
-from .result import Result, Ok, Err
+
+import utils
+
+from .result import Err, Ok, Result
 
 
 def run(
-    command: List[str],
+    command: List[str] | str,
     critical=False,
     capture=False,
     silent=False,
@@ -13,7 +15,7 @@ def run(
 ) -> Result[str, Tuple[int, str]]:
     if not silent:
         command_str = " ".join(command) if type(command) is list else command
-        utils.log.info(f"Running command {command_str}")
+        utils.io.info(f"Running command {command_str}")
 
     result = subprocess.run(
         command, capture_output=capture, text=True, check=False, shell=True, env=env
@@ -22,7 +24,7 @@ def run(
     if result.returncode:
         if critical:
             error = f": {result.stderr}" if result.stderr else ""
-            utils.log.error(f"Command failed{error}")
+            utils.io.error(f"Command failed{error}")
             exit(1)
         else:
             return Err((result.returncode, result.stderr))
