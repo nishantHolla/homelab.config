@@ -7,7 +7,7 @@ from utils import completion
 from utils.result import Result, Ok, Err
 import utils
 
-app = typer.Typer(v.SERVICE_TYPER_HELP)
+app = typer.Typer(help=v.SERVICE_TYPER_HELP)
 
 
 def _load_secrets(service_name: str) -> Result[dict[str, str], str]:
