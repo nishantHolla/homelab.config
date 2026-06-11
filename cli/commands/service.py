@@ -1,11 +1,13 @@
 import os
-import yaml
 from pathlib import Path
+from typing import List
+
 import typer
+import utils
+import yaml
 from config import values as v
 from utils import completion
-from utils.result import Result, Ok, Err
-import utils
+from utils.result import Err, Ok, Result
 
 app = typer.Typer(help=v.SERVICE_TYPER_HELP)
 
@@ -78,11 +80,8 @@ def up(
 
 
 def up_all():
-    for item in v.SERVICE_DIR.iterdir():
-        if not item.is_dir():
-            continue
-
-        up(str(item))
+    for item in utils.docker_handler.get_stopped_services():
+        up(item)
 
 
 @app.command(help=v.SERVICE_TYPER_HELP["down"])
@@ -117,13 +116,21 @@ def down(
 
 
 def down_all():
-    for item in v.SERVICE_DIR.iterdir():
-        if not item.is_dir():
-            continue
-
-        down(str(item))
+    for item in utils.docker_handler.get_running_services():
+        down(item)
 
 
 @app.command(name="list", help=v.SERVICE_TYPER_HELP["list"])
 def list_services():
-    pass
+    services = utils.docker_handler.get_service_info()
+    table: List[List[str]] = [["Servie", "Status"]]
+
+    for service in services:
+        row = [service["name"], service["status"]]
+        table.append(row)
+
+        for container in service["containers"]:
+            row = [(" " * 4) + container["name"], container["status"]]
+            table.append(row)
+
+    utils.io.table(table)

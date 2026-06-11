@@ -1,5 +1,6 @@
 import logging
 from getpass import getpass
+from typing import List
 
 logging.basicConfig(
     level=logging.INFO,
@@ -42,3 +43,25 @@ def warning(msg: str) -> None:
 
 def error(msg: str) -> None:
     _logger.error(msg)
+
+
+def table(rows: List[List[str]]) -> None:
+    if not rows:
+        return
+
+    col_widths = [
+        max(len(row[i]) for row in rows if i < len(row))
+        for i in range(max(len(row) for row in rows))
+    ]
+
+    def format_row(row: List[str]) -> str:
+        return " | ".join(
+            row[i].ljust(col_widths[i]) if i < len(row) else " " * col_widths[i]
+            for i in range(len(col_widths))
+        )
+
+    print(format_row(rows[0]))
+
+    print("-+-".join("-" * w for w in col_widths))
+    for row in rows[1:]:
+        print(format_row(row))
