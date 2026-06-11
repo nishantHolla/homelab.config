@@ -39,13 +39,8 @@ def up(
     service_name: str = typer.Argument("", shell_complete=completion.complete_services),
 ):
     if service_name == "":
-        confirm = utils.io.get_confirmation("Do you want to start all services?")
-
-        if not confirm:
-            exit(0)
-        else:
-            up_all()
-            exit(0)
+        utils.io.error("Error: Service name not provided")
+        exit(1)
 
     service_root = v.SERVICE_DIR / service_name
 
@@ -79,23 +74,13 @@ def up(
     exit(0)
 
 
-def up_all():
-    for item in utils.docker_handler.get_stopped_services():
-        up(item)
-
-
 @app.command(help=v.SERVICE_TYPER_HELP["down"])
 def down(
     service_name: str = typer.Argument("", shell_complete=completion.complete_services),
 ):
     if service_name == "":
-        confirm = utils.io.get_confirmation("Do you want to stop all services?")
-
-        if not confirm:
-            exit(0)
-        else:
-            down_all()
-            exit(0)
+        utils.io.error("Error: Service name not provided")
+        exit(1)
 
     service_root = v.SERVICE_DIR / service_name
 
@@ -113,11 +98,6 @@ def down(
     )
 
     exit(0)
-
-
-def down_all():
-    for item in utils.docker_handler.get_running_services():
-        down(item)
 
 
 @app.command(name="list", help=v.SERVICE_TYPER_HELP["list"])
