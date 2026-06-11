@@ -4,14 +4,13 @@ from pathlib import Path
 
 import typer
 import utils
-from config import usage
 from config import values as v
 from utils.result import Err, Ok, Result
 
-app = typer.Typer(help=usage.NIXOS_USAGE)
+app = typer.Typer(help=v.NIXOS_TYPER_HELP)
 
 
-@app.command()
+@app.command(help=v.NIXOS_TYPER_HELP["setup"])
 def setup():
     if not Path("/etc/NIXOS").exists():
         confirm = utils.io.get_confirmation(
@@ -145,7 +144,7 @@ def setup():
     exit(0)
 
 
-@app.command()
+@app.command(help=v.NIXOS_TYPER_HELP["switch"])
 def switch():
     HOSTNAME = socket.gethostname()
     if not HOSTNAME:
