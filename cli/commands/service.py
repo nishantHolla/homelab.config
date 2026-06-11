@@ -16,7 +16,7 @@ def _load_secrets(service_name: str) -> Result[dict[str, str], str]:
 
     service_secret = v.SECRET_DIR / f"{service_name}.yaml"
     if not service_secret.is_file():
-        return Ok(dict())
+        return Ok(os.environ.copy())
 
     env = os.environ.copy()
     env["SOPS_AGE_KEY_FILE"] = str(Path(v.SOPS_DIR) / "age" / "keys.txt")
