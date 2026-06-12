@@ -128,6 +128,8 @@ def print_service_status() -> Result[None, str]:
             row = [(" " * 4) + container["name"], container["status"]]
             table.append(row)
 
+        table.append(["", ""])
+
     utils.io.table(table)
     return Ok(None)
 

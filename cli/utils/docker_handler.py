@@ -49,8 +49,14 @@ def get_service_info() -> List[Service]:
         service: Service = {
             "name": project,
             "containers": container_list,
-            "status": "running",
+            "status": "active",
         }
+
+        for c in container_list:
+            if c["status"] != "running":
+                service["status"] = "unhealthy"
+                break
+
         result.append(service)
 
     all_services = get_all_services()
@@ -58,7 +64,9 @@ def get_service_info() -> List[Service]:
 
     for service_name in all_services:
         if service_name not in running_services:
-            result.append({"name": service_name, "containers": [], "status": "stopped"})
+            result.append(
+                {"name": service_name, "containers": [], "status": "inactive"}
+            )
 
     return result
 
