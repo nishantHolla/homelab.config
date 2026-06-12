@@ -58,12 +58,12 @@ def start_service(service_name: str, detach=False) -> Result[None, str]:
             return Err(f"Failed to load secrets. Error: {e}")
 
     env = result.unwrap()
-    flags = "-f"
+    flags = ""
     if detach:
         flags += " -d"
 
     utils.runner.run(
-        f"docker compose {flags} {service_compose_file} up",
+        f"docker compose -f {service_compose_file} up {flags}",
         capture=False,
         critical=True,
         env=env,
