@@ -69,7 +69,8 @@ def start_service(service_name: str, detach=False) -> Result[None, str]:
         env=env,
     )
 
-    return Err(f"Started service {service_name}")
+    utils.io.info(f"Started service {service_name}")
+    return Ok(None)
 
 
 def start_all_services() -> Result[None, str]:
