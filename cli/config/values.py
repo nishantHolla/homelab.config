@@ -18,16 +18,19 @@ SOPS_DIR = os.environ.get("HOMELAB_SOPS_DIR")
 
 ## Help
 
+HOMELAB_TYPER_HELP_STR = "CLI for homelab"
 HOMELAB_TYPER_HELP = {
     "nixos": "Control system-level configuration",
     "service": "Control services of the homelab",
 }
 
+NIXOS_TYPER_HELP_STR = "Control system-level configuration"
 NIXOS_TYPER_HELP = {
     "setup": "Perform setup actions for the system",
     "switch": "Switch to new configuration by rebuilding using nixos",
 }
 
+SERVICE_TYPER_HELP_STR = "Control services of the homelab"
 SERVICE_TYPER_HELP = {
     "up": "Start a service",
     "down": "Stop a service",

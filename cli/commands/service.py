@@ -9,7 +9,7 @@ from config import values as v
 from utils import completion
 from utils.result import Err, Ok, Result
 
-app = typer.Typer(help=v.SERVICE_TYPER_HELP)
+app = typer.Typer(help=v.SERVICE_TYPER_HELP_STR)
 
 ### Command Functions ###
 

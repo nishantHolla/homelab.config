@@ -7,7 +7,7 @@ import utils
 from config import values as v
 from utils.result import Err, Ok, Result
 
-app = typer.Typer(help=v.NIXOS_TYPER_HELP)
+app = typer.Typer(help=v.NIXOS_TYPER_HELP_STR)
 
 ### Command Functions ###
 
