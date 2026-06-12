@@ -9,24 +9,24 @@ from utils.result import Err, Ok, Result
 
 app = typer.Typer(help=v.NIXOS_TYPER_HELP)
 
+### Command Functions ###
 
-@app.command(help=v.NIXOS_TYPER_HELP["setup"])
-def setup():
+
+def setup_nixos() -> Result[None, str]:
     if not Path("/etc/NIXOS").exists():
         confirm = utils.io.get_confirmation(
             "Detected that this is not an installation environment. Do you still want to run the 'setup' command?"
         )
 
         if not confirm:
-            exit(1)
+            return Ok(None)
 
     HOSTNAME = utils.io.get_input("Enter hostname: ")
     USERNAME = utils.io.get_input("Enter username: ")
     ROOT_PATH = Path(utils.io.get_input("Enter root path: "))
 
     if not ROOT_PATH.is_dir():
-        utils.io.error(f"Root path {ROOT_PATH} not found")
-        exit(1)
+        return Err(f"Root path {ROOT_PATH} not found")
 
     ROOT_CONFIG_DIR = ROOT_PATH / "etc" / "nixos"
     ROOT_HARDWARE_FILE = ROOT_CONFIG_DIR / "hardware-configuration.nix"
@@ -71,8 +71,7 @@ def setup():
 
         match result:
             case Err(e):
-                utils.io.error(f"Failed to update config file. Error: {e}")
-                exit(1)
+                return Err(f"Failed to update config file. Error: {e}")
 
         result = utils.file.find_and_replace(
             HOST_CONFIG_FILE, "$TEMPLATE_HOSTNAME", HOSTNAME
@@ -80,8 +79,7 @@ def setup():
 
         match result:
             case Err(e):
-                utils.io.error(f"Failed to update config file. Error: {e}")
-                exit(1)
+                return Err(f"Failed to update config file. Error: {e}")
 
         result = utils.file.find_and_replace(
             HOST_CONFIG_FILE, "$TEMPLATE_USERNAME", USERNAME
@@ -89,8 +87,7 @@ def setup():
 
         match result:
             case Err(e):
-                utils.io.error(f"Failed to update config file. Error: {e}")
-                exit(1)
+                return Err(f"Failed to update config file. Error: {e}")
 
     utils.io.info(f"Checking if flake file has {HOSTNAME}")
     try:
@@ -98,8 +95,7 @@ def setup():
             flake = file.read()
 
     except Exception as e:
-        utils.io.error(f"Failed to read flake file. Error: {e}")
-        exit(1)
+        return Err(f"Failed to read flake file. Error: {e}")
 
     check = rf"(nixosConfigurations\.{HOSTNAME}\s*=\s*nixpkgs\.lib\.nixosSystem\s*)"
     if not re.search(check, flake, re.DOTALL):
@@ -113,8 +109,7 @@ def setup():
             block = extracted_block.replace("template", HOSTNAME)
 
         else:
-            utils.io.error("Failed to find template block")
-            exit(1)
+            return Err("Failed to find template block")
 
         flake = flake[: match.end()] + "\n\n    " + block + flake[match.end() :]
         try:
@@ -122,8 +117,7 @@ def setup():
                 file.write(flake)
 
         except Exception as e:
-            utils.io.error(f"Failed to write flake file. Error: {e}")
-            exit(1)
+            return Err(f"Failed to write flake file. Error: {e}")
 
     utils.io.info("Adding new config to git")
     utils.runner.run(f"git add {v.NIXOS_DIR}", capture=True, critical=True)
@@ -141,15 +135,13 @@ def setup():
             critical=True,
         )
 
-    exit(0)
+    return Ok(None)
 
 
-@app.command(help=v.NIXOS_TYPER_HELP["switch"])
-def switch():
+def switch_nixos() -> Result[None, str]:
     HOSTNAME = socket.gethostname()
     if not HOSTNAME:
-        utils.io.error("Failed to get hostname")
-        exit(1)
+        return Err("Failed to get hostname")
 
     utils.io.info("Switching nixos config")
     utils.runner.run(
@@ -157,5 +149,30 @@ def switch():
         capture=False,
         critical=True,
     )
+
+    return Ok(None)
+
+
+### Sub Commands ###
+
+
+@app.command(help=v.NIXOS_TYPER_HELP["setup"])
+def setup():
+    result = setup_nixos()
+    match result:
+        case Err(e):
+            utils.io.error(e)
+            exit(1)
+
+    exit(0)
+
+
+@app.command(help=v.NIXOS_TYPER_HELP["switch"])
+def switch():
+    result = switch_nixos()
+    match result:
+        case Err(e):
+            utils.io.error(e)
+            exit(1)
 
     exit(0)

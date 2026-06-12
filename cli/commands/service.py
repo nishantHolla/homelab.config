@@ -11,6 +11,8 @@ from utils.result import Err, Ok, Result
 
 app = typer.Typer(help=v.SERVICE_TYPER_HELP)
 
+### Command Functions ###
+
 
 def _load_secrets(service_name: str) -> Result[dict[str, str], str]:
     if not v.SOPS_DIR:
@@ -34,74 +36,86 @@ def _load_secrets(service_name: str) -> Result[dict[str, str], str]:
     return Ok(env)
 
 
-@app.command(help=v.SERVICE_TYPER_HELP["up"])
-def up(
-    service_name: str = typer.Argument("", shell_complete=completion.complete_services),
-):
+def start_service(service_name: str, detach=False) -> Result[None, str]:
     if service_name == "":
-        utils.io.error("Error: Service name not provided")
-        exit(1)
+        return Err("Service name not provided")
 
     service_root = v.SERVICE_DIR / service_name
 
     if not service_root.is_dir():
-        utils.io.error(f"Service {service_name} not found")
-        exit(1)
+        return Err(f"Service {service_name} not found")
 
     service_compose_file = service_root / "docker-compose.yml"
 
     if not service_compose_file.is_file():
-        utils.io.error(
+        return Err(
             f"Service compose file for {service_name} not found at {service_compose_file}"
         )
-        exit(1)
 
     result = _load_secrets(service_name)
     match result:
         case Err(e):
-            utils.io.error(f"Failed to load secrets. Error: {e}")
-            exit(1)
+            return Err(f"Failed to load secrets. Error: {e}")
 
     env = result.unwrap()
+    flags = "-f"
+    if detach:
+        flags += " -d"
+
     utils.runner.run(
-        f"docker compose -f {service_compose_file} up",
+        f"docker compose {flags} {service_compose_file} up",
         capture=False,
         critical=True,
         env=env,
     )
 
-    utils.io.info(f"Started service {service_name}")
-    exit(0)
+    return Err(f"Started service {service_name}")
 
 
-@app.command(help=v.SERVICE_TYPER_HELP["down"])
-def down(
-    service_name: str = typer.Argument("", shell_complete=completion.complete_services),
-):
+def start_all_services() -> Result[None, str]:
+    for service in utils.docker_handler.get_stopped_services():
+        utils.io.info(f"Starting service {service}")
+        result = start_service(service, detach=True)
+        match result:
+            case Err(e):
+                return Err(e)
+
+    return Ok(None)
+
+
+def stop_service(service_name: str) -> Result[None, str]:
     if service_name == "":
-        utils.io.error("Error: Service name not provided")
-        exit(1)
+        return Err("Service name is required")
 
     service_root = v.SERVICE_DIR / service_name
 
     if not service_root.is_dir():
-        utils.io.error(f"Service {service_name} not found")
-        exit(1)
+        return Err(f"Service {service_name} not found")
 
     service_compose_file = service_root / "docker-compose.yml"
 
     if not service_compose_file.is_file():
-        utils.io.error(f"Service compose file for {service_name} is not found")
+        return Err(f"Service compose file for {service_name} is not found")
 
     utils.runner.run(
         f"docker compose -f {service_compose_file} down", capture=False, critical=True
     )
 
-    exit(0)
+    return Ok(None)
 
 
-@app.command(name="list", help=v.SERVICE_TYPER_HELP["list"])
-def list_services():
+def stop_all_services() -> Result[None, str]:
+    for service in utils.docker_handler.get_stopped_services():
+        utils.io.info(f"Stopping service {service}")
+        result = stop_service(service)
+        match result:
+            case Err(e):
+                return Err(e)
+
+    return Ok(None)
+
+
+def print_service_status() -> Result[None, str]:
     services = utils.docker_handler.get_service_info()
     table: List[List[str]] = [["Servie", "Status"]]
 
@@ -114,3 +128,67 @@ def list_services():
             table.append(row)
 
     utils.io.table(table)
+    return Ok(None)
+
+
+### Sub Commands ###
+
+
+@app.command(help=v.SERVICE_TYPER_HELP["up"])
+def up(
+    service_name: str = typer.Argument("", shell_complete=completion.complete_services),
+):
+    result = None
+
+    if service_name == "":
+        confirm = utils.io.get_confirmation("Do you want to start all services?")
+
+        if not confirm:
+            exit(0)
+        else:
+            result = start_all_services()
+
+    else:
+        result = start_service(service_name)
+
+    match result:
+        case Err(e):
+            utils.io.error(e)
+            exit(1)
+
+    exit(0)
+
+
+@app.command(help=v.SERVICE_TYPER_HELP["down"])
+def down(
+    service_name: str = typer.Argument("", shell_complete=completion.complete_services),
+):
+    result = None
+
+    if service_name == "":
+        confirm = utils.io.get_confirmation("Do you want to stop all services?")
+
+        if not confirm:
+            exit(0)
+        else:
+            result = stop_all_services()
+
+    else:
+        result = stop_service(service_name)
+
+    match result:
+        case Err(e):
+            utils.io.error(e)
+            exit(1)
+
+    exit(0)
+
+
+def down_all():
+    for item in utils.docker_handler.get_running_services():
+        stop_service(item)
+
+
+@app.command(name="list", help=v.SERVICE_TYPER_HELP["list"])
+def list_services():
+    print_service_status()
