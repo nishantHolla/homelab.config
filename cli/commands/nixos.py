@@ -135,25 +135,6 @@ def setup_nixos() -> Result[None, str]:
             critical=True,
         )
 
-        utils.io.info(f"Moving homelab config to {USERNAME}")
-        utils.runner.run(
-            f"nixos-enter --root {ROOT_PATH} -c 'mv {v.HOMELAB_DIR} /home/{USERNAME}'",
-            capture=True,
-            critical=True,
-        )
-
-        utils.runner.run(
-            f"nixos-enter --root {ROOT_PATH} -c 'chown -R {USERNAME} /home/${USERNAME}/{v.HOMELAB_DIR.name}'",
-            capture=True,
-            critical=True,
-        )
-
-        utils.runner.run(
-            f"nixos-enter --root {ROOT_PATH} -c 'runuser -u {USERNAME} -- homelab --install-completion'",
-            capture=True,
-            critical=True,
-        )
-
     return Ok(None)
 
 
