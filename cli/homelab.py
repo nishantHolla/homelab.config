@@ -4,7 +4,7 @@ import typer
 from config import values as v
 from commands import nixos, service
 
-app = typer.Typer(help=v.HOMELAB_TYPER_HELP)
+app = typer.Typer(help=v.HOMELAB_TYPER_HELP, rich_markup_mode=None)
 app.add_typer(nixos.app, name="nixos")
 app.add_typer(service.app, name="service")
 
