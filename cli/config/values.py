@@ -32,4 +32,5 @@ SERVICE_TYPER_HELP = {
     "up": "Start a service",
     "down": "Stop a service",
     "list": "List all the services and their status",
+    "logs": "Attach current shell to service logs",
 }

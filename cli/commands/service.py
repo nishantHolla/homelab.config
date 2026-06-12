@@ -134,6 +134,31 @@ def print_service_status() -> Result[None, str]:
     return Ok(None)
 
 
+def attach_to_service_logs(service_name: str) -> Result[None, str]:
+    if service_name == "":
+        return Err("Service name not provided")
+
+    service_root = v.SERVICE_DIR / service_name
+
+    if not service_root.is_dir():
+        return Err(f"Service {service_name} not found")
+
+    service_compose_file = service_root / "docker-compose.yml"
+
+    if not service_compose_file.is_file():
+        return Err(
+            f"Service compose file for {service_name} not found at {service_compose_file}"
+        )
+
+    utils.runner.run(
+        f"docker compose -f {service_compose_file} logs -f",
+        capture=False,
+        critical=False,
+    )
+
+    return Ok(None)
+
+
 ### Sub Commands ###
 
 
@@ -195,3 +220,16 @@ def down_all():
 @app.command(name="list", help=v.SERVICE_TYPER_HELP["list"])
 def list_services():
     print_service_status()
+
+
+@app.command(help=v.SERVICE_TYPER_HELP["logs"])
+def logs(
+    service_name: str = typer.Argument("", shell_complete=completion.complete_services),
+):
+    result = attach_to_service_logs(service_name)
+    match result:
+        case Err(e):
+            utils.io.error(e)
+            exit(1)
+
+    exit(0)
