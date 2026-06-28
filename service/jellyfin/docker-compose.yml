@@ -13,9 +13,9 @@ services:
       - ${JELLYFIN_UDP_PORT}:7359/udp
 
     volumes:
-      - ${HOMELAB_DATA_DIR}/jellyfin/config:/config
-      - ${HOMELAB_DATA_DIR}/jellyfin/cache:/cache
-      - ${HOMELAB_DATA_DIR}/jellyfin/media:/media:ro
+      - ${HOMELAB_DATA_DIR}/apps/jellyfin/config:/config
+      - ${HOMELAB_DATA_DIR}/apps/jellyfin/cache:/cache
+      - ${HOMELAB_DATA_DIR}/library/tv:/media:ro
 
     environment:
       TZ: ${TZ}

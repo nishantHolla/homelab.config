@@ -7,7 +7,7 @@ services:
     container_name: nextcloud-db
 
     volumes:
-      - ${HOMELAB_DATA_DIR}/nextcloud/db:/var/lib/mysql
+      - ${HOMELAB_DATA_DIR}/apps/nextcloud/db:/var/lib/mysql
 
     environment:
       TZ: ${TZ}
@@ -92,8 +92,8 @@ services:
       - ${NEXTCLOUD_PORT}:80
 
     volumes:
-      - ${HOMELAB_DATA_DIR}/nextcloud/data:/var/www/html/data
-      - ${HOMELAB_DATA_DIR}/nextcloud/html:/var/www/html
+      - ${HOMELAB_DATA_DIR}/apps/nextcloud/data:/var/www/html/data
+      - ${HOMELAB_DATA_DIR}/apps/nextcloud/html:/var/www/html
 
     environment:
       TZ: ${TZ}

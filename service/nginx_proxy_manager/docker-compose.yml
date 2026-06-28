@@ -12,8 +12,8 @@ services:
       - 443:443/tcp
 
     volumes:
-      - ${HOMELAB_DATA_DIR}/npm/data:/data
-      - ${HOMELAB_DATA_DIR}/npm/letsencrypt:/etc/letsencrypt
+      - ${HOMELAB_DATA_DIR}/apps/nginx_proxy_manager/data:/data
+      - ${HOMELAB_DATA_DIR}/apps/nginx_proxy_manager/letsencrypt:/etc/letsencrypt
 
     environment:
       TZ: ${TZ}

@@ -10,7 +10,7 @@ services:
       - "${UPTIME_KUMA_PORT}:3001"
 
     volumes:
-      - ${HOMELAB_DATA_DIR}/uptime_kuma/data:/app/data
+      - ${HOMELAB_DATA_DIR}/apps/uptime_kuma/data:/app/data
 
     environment:
       TZ: ${TZ}

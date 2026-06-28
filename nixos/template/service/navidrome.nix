@@ -3,6 +3,6 @@
 
 {
   environment.variables = {
-    NAVIDROME_PORT="8220";
+    NAVIDROME_PORT="8600";
   };
 }

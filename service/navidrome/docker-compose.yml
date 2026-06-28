@@ -12,8 +12,8 @@ services:
       - ${NAVIDROME_PORT}:4533
 
     volumes:
-      - ${HOMELAB_DATA_DIR}/navidrome/data:/data
-      - ${HOMELAB_DATA_DIR}/navidrome/music:/music:ro
+      - ${HOMELAB_DATA_DIR}/apps/navidrome/data:/data
+      - ${HOMELAB_DATA_DIR}/library/music:/music:ro
 
     environment:
       TZ: ${TZ}

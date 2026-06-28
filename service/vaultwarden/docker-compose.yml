@@ -10,7 +10,7 @@ services:
       - "${VAULTWARDEN_PORT}:80"
 
     volumes:
-      - ${HOMELAB_DATA_DIR}/vaultwarden/data:/data
+      - ${HOMELAB_DATA_DIR}/apps/vaultwarden/data:/data
 
     environment:
       TZ: ${TZ}

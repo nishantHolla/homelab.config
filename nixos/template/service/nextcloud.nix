@@ -3,8 +3,8 @@
 
 {
   environment.variables = {
-    NEXTCLOUD_PORT="8260";
-    COLLABORA_PORT="8261";
+    NEXTCLOUD_PORT="8220";
+    COLLABORA_PORT="8221";
     NEXTCLOUD_MYSQL_HOST="db";
     NEXTCLOUD_MYSQL_DATABASE="nextcloud";
     NEXTCLOUD_MYSQL_USER="nextcloud";

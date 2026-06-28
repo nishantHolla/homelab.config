@@ -3,7 +3,7 @@
 
 {
   environment.variables = {
-    JELLYFIN_TCP_PORT="8240";
-    JELLYFIN_UDP_PORT="8241";
+    JELLYFIN_TCP_PORT="8620";
+    JELLYFIN_UDP_PORT="8621";
   };
 }

@@ -10,7 +10,7 @@ services:
       - ${STIRLING_PORT}:8080
 
     volumes:
-      - ${HOMELAB_DATA_DIR}/stirling/data:/configs
+      - ${HOMELAB_DATA_DIR}/apps/stirling/data:/configs
 
     environment:
       TZ: ${TZ}
