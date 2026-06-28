@@ -18,6 +18,7 @@
         ./template/service/convertx.nix
         ./template/service/immich.nix
         ./template/service/jellyfin.nix
+        ./template/service/kavita.nix
         ./template/service/navidrome.nix
         ./template/service/nextcloud.nix
         ./template/service/nginx_proxy_manager.nix

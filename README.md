@@ -33,6 +33,7 @@ The goal of this homelab is to run core services locally with proper DNS, revers
 | ----------------------------------------------------- | ---------------------------------------------------- | ---------------- | ----------------- |
 | [Navidrome](./service/navidrome/)                     | Self-hosted music streaming solution                 | `8600`           | music.homelab     |
 | [Jellyfin](./service/jellyfin/)                       | Self-hosted media solution                           | `8620`, `8621`   | tv.homelab        |
+| [Kavita](./service/kavita/)                           | Self-hosted digital library                          | `8640`           | reader.homelab    |
 
 ## Hardware
 
