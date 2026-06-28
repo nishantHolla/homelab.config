@@ -3,6 +3,6 @@
 
 {
   environment.variables = {
-    UPTIME_KUMA_PORT="8020";
+    UPTIME_KUMA_PORT="8000";
   };
 }

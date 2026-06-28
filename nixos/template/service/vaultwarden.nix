@@ -3,6 +3,6 @@
 
 {
   environment.variables = {
-    VAULTWARDEN_PORT="8040";
+    VAULTWARDEN_PORT="8020";
   };
 }

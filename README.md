@@ -10,9 +10,8 @@ The goal of this homelab is to run core services locally with proper DNS, revers
 | Service                                               | Description                                          | Dashboard Port   | Sub Domain        |
 | ----------------------------------------------------- | ---------------------------------------------------- | ---------------- | ----------------- |
 | [Nginx Proxy Manager](./service/nginx_proxy_manager/) | Reverse proxy with web-based management UI           | `81`             | npm.homelab       |
-| [AdGuard Home](./service/adguard/)                    | Network-wide DNS and ad blocking                     | `8000`, `8001`   | adguard.homelab   |
-| [Uptime Kuma](./service/uptime_kuma/)                 | A self-hosted monitoring tool                        | `8020`           | uptime.homelab    |
-| [Vaultwarden](./service/vaultwarden/)                 | Password manager                                     | `8040`           | password.homelab  |
+| [Uptime Kuma](./service/uptime_kuma/)                 | A self-hosted monitoring tool                        | `8000`           | uptime.homelab    |
+| [Vaultwarden](./service/vaultwarden/)                 | Password manager                                     | `8020`           | password.homelab  |
 
 ### Storage and Cloud (8200 to 8400)
 

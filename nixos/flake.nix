@@ -15,7 +15,6 @@
         ./template/packages.nix
         ./template/hardware.nix
 
-        ./template/service/adguard.nix
         ./template/service/convertx.nix
         ./template/service/immich.nix
         ./template/service/jellyfin.nix
