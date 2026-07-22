@@ -7,25 +7,26 @@ The goal of this homelab is to run core services locally with proper DNS, revers
 
 ### Core services (8000 to 8200)
 
-| Service                                               | Description                                          | Dashboard Port   | Sub Domain        |
-| ----------------------------------------------------- | ---------------------------------------------------- | ---------------- | ----------------- |
-| [Nginx Proxy Manager](./service/nginx_proxy_manager/) | Reverse proxy with web-based management UI           | `81`             | proxy.homelab     |
-| [Uptime Kuma](./service/uptime_kuma/)                 | A self-hosted monitoring tool                        | `8000`           | uptime.homelab    |
-| [Vaultwarden](./service/vaultwarden/)                 | Password manager                                     | `8020`           | password.homelab  |
+| Service                                               | Description                                          | Dashboard Port   | Sub Domain         |
+| ----------------------------------------------------- | ---------------------------------------------------- | ---------------- | ------------------ |
+| [Nginx Proxy Manager](./service/nginx_proxy_manager/) | Reverse proxy with web-based management UI           | `81`             | proxy.homelab      |
+| [Uptime Kuma](./service/uptime_kuma/)                 | A self-hosted monitoring tool                        | `8000`           | uptime.homelab     |
+| [Vaultwarden](./service/vaultwarden/)                 | Password manager                                     | `8020`           | password.homelab   |
 
 ### Storage and Cloud (8200 to 8400)
 
-| Service                                               | Description                                          | Dashboard Port   | Sub Domain        |
-| ----------------------------------------------------- | ---------------------------------------------------- | ---------------- | ----------------- |
-| [Immich](./service/immich/)                           | Self-hosted photo and video backup solution          | `8200`           | photos.homelab    |
-| [Nextcloud](./service/nextcloud/)                     | Self-hosted cloud storage and collaboration platform | `8220`, `8221`   | cloud.homelab     |
+| Service                                               | Description                                          | Dashboard Port   | Sub Domain         |
+| ----------------------------------------------------- | ---------------------------------------------------- | ---------------- | ------------------ |
+| [Immich](./service/immich/)                           | Self-hosted photo and video backup solution          | `8200`           | photos.homelab     |
+| [Nextcloud](./service/nextcloud/)                     | Self-hosted cloud storage and collaboration platform | `8220`, `8221`   | cloud.homelab      |
 
 ### Tools and Utilities (8400 to 8600)
 
-| Service                                               | Description                                          | Dashboard Port   | Sub Domain        |
-| ----------------------------------------------------- | ---------------------------------------------------- | ---------------- | ----------------- |
-| [ConvertX](./service/convertx/)                       | Self-hosted file conversion service                  | `8400`           | convert.homelab   |
-| [Stirling](./service/stirling/)                       | Self-hosted PDF toolkit                              | `8420`           | pdf.homelab       |
+| Service                                               | Description                                          | Dashboard Port   | Sub Domain         |
+| ----------------------------------------------------- | ---------------------------------------------------- | ---------------- | ------------------ |
+| [ConvertX](./service/convertx/)                       | Self-hosted file conversion service                  | `8400`           | convert.homelab    |
+| [Stirling](./service/stirling/)                       | Self-hosted PDF toolkit                              | `8420`           | pdf.homelab        |
+| [Excalidraw](./service/excalidraw/)                   | Self-hosted whiteboard                               | `8440`           | whiteboard.homelab |
 
 ### Media (8600 to 8800)
 

@@ -16,6 +16,7 @@
         ./template/hardware.nix
 
         ./template/service/convertx.nix
+        ./template/service/excalidraw.nix
         ./template/service/immich.nix
         ./template/service/jellyfin.nix
         ./template/service/kavita.nix
