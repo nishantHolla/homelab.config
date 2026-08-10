@@ -38,3 +38,7 @@ The goal of this homelab is to run core services locally with proper DNS, revers
 ## Hardware
 
 Currently it is running on a Raspberry Pi 4B (4GB RAM) inside a tailscale network.
+
+## Resources
+
+- For hosting on Raspberry Pi: [https://thehellings.com/posts/nixos-on-raspberry-pi-4/](https://thehellings.com/posts/nixos-on-raspberry-pi-4/)
