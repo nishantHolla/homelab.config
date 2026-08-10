@@ -9,6 +9,7 @@
     gcc
     git
     neovim
+    raspberrypifw
     sops
     tmux
     wget
