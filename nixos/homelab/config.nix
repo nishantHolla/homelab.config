@@ -36,8 +36,8 @@
   services.zfs.trim.enable = true;
 
   # Networking
-  networking.hostId = "$TEMPLATE_NETWORK_HOST_ID";
-  networking.hostName = "$TEMPLATE_HOSTNAME";
+  networking.hostId = "8d94a79f";
+  networking.hostName = "homelab";
   networking.networkmanager.enable = true;
 
   # Time Zone
@@ -54,7 +54,7 @@
   services.xserver.enable = false;
 
   # Users
-  users.users.$TEMPLATE_USERNAME = {
+  users.users.admin = {
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" ];
     packages = with pkgs; [ ];

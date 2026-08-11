@@ -28,5 +28,24 @@
       ];
     }; ## --END--
 
+    nixosConfigurations.homelab = nixpkgs.lib.nixosSystem { ## --START--
+      modules = [
+        ./homelab/config.nix
+        ./homelab/packages.nix
+        ./homelab/hardware.nix
+
+        ./homelab/service/convertx.nix
+        ./homelab/service/excalidraw.nix
+        ./homelab/service/immich.nix
+        ./homelab/service/jellyfin.nix
+        ./homelab/service/navidrome.nix
+        ./homelab/service/nextcloud.nix
+        ./homelab/service/nginx_proxy_manager.nix
+        ./homelab/service/stirling.nix
+        ./homelab/service/uptime_kuma.nix
+        ./homelab/service/vaultwarden.nix
+      ];
+    };
+
   };
 }
