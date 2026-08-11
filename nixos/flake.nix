@@ -33,6 +33,7 @@
         ./homelab/config.nix
         ./homelab/packages.nix
         ./homelab/hardware.nix
+        ./homelab/backup.nix
 
         ./homelab/service/convertx.nix
         ./homelab/service/excalidraw.nix
