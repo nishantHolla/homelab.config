@@ -45,49 +45,30 @@ def setup_nixos() -> Result[None, str]:
 
     utils.io.info(f"Checking if host config exists at {HOST_CONFIG_DIR}")
     if not HOST_CONFIG_DIR.is_dir():
-        utils.io.info(f"Host config not found. Making host config at {HOST_CONFIG_DIR}")
-        utils.runner.run(
-            f"cp -r {v.NIXOS_TEMPLATE_DIR} {HOST_CONFIG_DIR}",
-            capture=True,
-            critical=True,
+        return Err(
+            f"Host config for host {HOSTNAME} does not exist at {HOST_CONFIG_DIR}. Please create it before running the setup"
         )
 
-        utils.io.info("Updating hardware file for host")
-        utils.runner.run(
-            f"cp -f {ROOT_HARDWARE_FILE} {HOST_HARDWARE_FILE}",
-            capture=True,
-            critical=True,
-        )
+    machine_id = utils.runner.run(
+        "head -c 8 /etc/machine-id", capture=True, critical=True
+    ).unwrap()  # Safe to unwrap because critical is True
 
-        utils.io.info("Updating config file for host")
+    result = utils.file.find_and_replace(
+        HOST_CONFIG_FILE,
+        'networking.hostId = ""',
+        f'networking.hostId = "{machine_id}"',
+    )
 
-        machine_id = utils.runner.run(
-            "head -c 8 /etc/machine-id", capture=True, critical=True
-        ).unwrap()  # Safe to unwrap because critical is True
+    match result:
+        case Err(e):
+            return Err(f"Failed to update config file. Error: {e}")
 
-        result = utils.file.find_and_replace(
-            HOST_CONFIG_FILE, "$TEMPLATE_NETWORK_HOST_ID", machine_id
-        )
-
-        match result:
-            case Err(e):
-                return Err(f"Failed to update config file. Error: {e}")
-
-        result = utils.file.find_and_replace(
-            HOST_CONFIG_FILE, "$TEMPLATE_HOSTNAME", HOSTNAME
-        )
-
-        match result:
-            case Err(e):
-                return Err(f"Failed to update config file. Error: {e}")
-
-        result = utils.file.find_and_replace(
-            HOST_CONFIG_FILE, "$TEMPLATE_USERNAME", USERNAME
-        )
-
-        match result:
-            case Err(e):
-                return Err(f"Failed to update config file. Error: {e}")
+    utils.io.info("Updating hardware file for host")
+    utils.runner.run(
+        f"cp -f {ROOT_HARDWARE_FILE} {HOST_HARDWARE_FILE}",
+        capture=True,
+        critical=True,
+    )
 
     utils.io.info(f"Checking if flake file has {HOSTNAME}")
     try:
