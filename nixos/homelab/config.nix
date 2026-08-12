@@ -19,6 +19,11 @@
 
     # The bootloader
     loader = {
+      raspberryPi = {
+        enable = true;
+        version = 4;
+      };
+
       # Use extlinux, whereas the NixOS default is Grub
       grub.enable = false;
 
