@@ -41,7 +41,7 @@
   services.zfs.trim.enable = true;
 
   # Networking
-  networking.hostId = "8d94a79f";
+  networking.hostId = "";
   networking.hostName = "homelab";
   networking.networkmanager.enable = true;
 
