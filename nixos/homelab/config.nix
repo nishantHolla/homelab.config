@@ -6,31 +6,18 @@
 
 {
   # Boot Loader
-  boot = {
-    # The Linux kernel version
-    kernelPackages = pkgs.linuxPackages_rpi4;
-    # Options to enable serial console and more
-    kernelParams = [
-      "8250.nr_uarts=1"
-      "console=tyAMA0,115200"
-      "console=tty1"
-      "cma=128M"
-    ];
+  boot.kernelPackages = pkgs.linuxPackages_rpi4;
+  boot.kernelParams = [
+    "8250.nr_uarts=1"
+    "console=tyAMA0,115200"
+    "console=tty1"
+    "cma=128M"
+  ];
 
-    # The bootloader
-    loader = {
-      raspberryPi = {
-        enable = true;
-        version = 4;
-      };
-
-      # Use extlinux, whereas the NixOS default is Grub
-      grub.enable = false;
-
-      # Enables the generation of /boot/extlinux/extlinux.conf
-      generic-extlinux-compatible.enable = true;
-    };
-  };
+  boot.loader.raspberryPi.enaable = true;
+  boot.loader.raspberryPi.version = 4;
+  boot.loader.grub.enable = false;
+  boot.loader.generic-extlinux-compatible.enable = true;
 
   # ZFS
   boot.supportedFilesystems = [ "zfs" ];
@@ -47,10 +34,6 @@
 
   # Time Zone
   time.timeZone = "Asia/Kolkata";
-
-  # Network Proxy
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Internationalisation Properties
   i18n.defaultLocale = "en_US.UTF-8";
@@ -125,5 +108,4 @@
   # Other settings
   system.stateVersion = "25.11";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
 }
