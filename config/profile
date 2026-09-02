@@ -1,0 +1,9 @@
+export HOMELAB_DIR="$HOME/Homelab";
+export HOMELAB_DATA_DIR="$HOME/Data";
+export HOMELAB_SOPS_DIR="$HOME/Sops";
+export HOMELAB_UID="1000";
+export HOMELAB_GID="100";
+export TZ="Asia/Kolkata";
+
+export PATH="$HOMELAB_DIR/bin:$PATH"
+export SOPS_AGE_KEY_FILE="$HOMELAB_SOPS_DIR/age/keys.txt"

@@ -1,0 +1,5 @@
+{
+	"bash/bashrc": "~/.bashrc",
+	"zsh/zshrc": "~/.zshrc",
+	"profile": "~/.profile"
+}
