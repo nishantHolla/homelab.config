@@ -18,14 +18,14 @@ def _load_secrets(service_name: str) -> Result[dict[str, str], str]:
     if not v.SOPS_DIR:
         return Err("HOMELAB_SOPS_DIR env not set")
 
-    service_secret = v.SECRET_DIR / f"{service_name}.yaml"
-    if not service_secret.is_file():
+    service_env = v.SERVICE_DIR / service_name / "env.yaml"
+    if not service_env.is_file():
         return Ok(os.environ.copy())
 
     env = os.environ.copy()
     env["SOPS_AGE_KEY_FILE"] = str(Path(v.SOPS_DIR) / "age" / "keys.txt")
     stdout = utils.runner.run(
-        f"sops -d {service_secret}", capture=True, critical=True
+        f"sops -d {service_env}", capture=True, critical=True
     ).unwrap()  # Safe to unwrap because critical is True
 
     secrets = yaml.safe_load(stdout)

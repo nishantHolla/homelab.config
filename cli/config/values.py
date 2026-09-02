@@ -12,7 +12,6 @@ NIXOS_TEMPLATE_DIR = NIXOS_DIR / "template"
 NIXOS_FLAKE_FILE = NIXOS_DIR / "flake.nix"
 
 SERVICE_DIR = HOMELAB_DIR / "service"
-SECRET_DIR = HOMELAB_DIR / "secrets"
 
 SOPS_DIR = os.environ.get("HOMELAB_SOPS_DIR")
 
