@@ -1,7 +1,10 @@
 from pathlib import Path
+import os
 
 from .result import Err, Ok, Result
 
+def resolve_path(path: Path | str):
+    return Path(os.path.expandvars(os.path.expanduser(path))).absolute()
 
 def find_and_replace(
     file_path: Path | str, find_str: str, replace_str: str

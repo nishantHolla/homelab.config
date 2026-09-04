@@ -11,7 +11,13 @@ NIXOS_DIR = HOMELAB_DIR / "nixos"
 NIXOS_TEMPLATE_DIR = NIXOS_DIR / "template"
 NIXOS_FLAKE_FILE = NIXOS_DIR / "flake.nix"
 
+RPIOS_DIR = HOMELAB_DIR / "rpios"
+RPIOS_PACKAGES_LIST = RPIOS_DIR / "packages.txt"
+RPIOS_INSTALL_DIR = RPIOS_DIR / "install"
+
 SERVICE_DIR = HOMELAB_DIR / "service"
+CONFIG_DIR = HOMELAB_DIR / "config"
+CONFIG_INDEX_FILE = CONFIG_DIR / "index.json"
 
 SOPS_DIR = os.environ.get("HOMELAB_SOPS_DIR")
 
@@ -27,6 +33,13 @@ NIXOS_TYPER_HELP_STR = "Control system-level configuration"
 NIXOS_TYPER_HELP = {
     "setup": "Perform setup actions for the system",
     "switch": "Switch to new configuration by rebuilding using nixos",
+}
+
+RPIOS_TYPER_HELP_STR = "Control system-level configuration"
+RPIOS_TYPER_HELP = {
+    "setup": "Perform setup actions for the system",
+    "link": "Setup symlinks for config",
+    "unlink": "Teardown sysmlinks of config"
 }
 
 SERVICE_TYPER_HELP_STR = "Control services of the homelab"
