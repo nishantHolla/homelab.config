@@ -27,7 +27,7 @@ The goal of this homelab is to run core services locally with proper DNS, revers
 | ----------------------------------------------------- | ---------------------------------------------------- | ---------------- | ------------------ |
 | [ConvertX](./service/convertx/)                       | Self-hosted file conversion service                  | `8400`           | convert.homelab    |
 | [Stirling](./service/stirling/)                       | Self-hosted PDF toolkit                              | `8420`           | pdf.homelab        |
-| [Excalidraw](./service/excalidraw/)                   | Self-hosted whiteboard                               | `8440`           | whiteboard.homelab |
+| [Excalidraw](./service/excalidraw/)                   | Self-hosted whiteboard                               | `8440`           | draw.homelab       |
 
 ### Media (8600 to 8800)
 
