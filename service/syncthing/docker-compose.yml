@@ -1,0 +1,40 @@
+name: syncthing
+
+services:
+  syncthing:
+    image: syncthing/syncthing:latest
+
+    container_name: syncthing
+
+    hostname: homelab
+
+    ports:
+      - ${SYNCTHING_PORT}:8384
+      - ${SYNCTHING_SYNC_PORT}:22000/tcp
+      - ${SYNCTHING_SYNC_PORT}:22000/udp
+      - ${SYNCTHING_DISCOVERY_PORT}:21027/udp
+
+    volumes:
+      - ${HOMELAB_DATA_DIR}/apps/syncthing/config:/var/syncthing/config
+      - ${HOMELAB_DATA_DIR}/${SYNCTHING_ROOT_DIR}:/var/syncthing/data
+
+    environment:
+      TZ: ${TZ}
+      PUID: ${HOMELAB_UID}
+      PGID: ${HOMELAB_GID}
+      STGUIADDRESS: 0.0.0.0:8384
+
+    restart: unless-stopped
+
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fkLsS -m 2 http://127.0.0.1:8384/rest/noauth/health | grep -q OK"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 1m
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

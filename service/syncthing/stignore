@@ -1,0 +1,47 @@
+// ---- Python ----
+(?d).venv
+(?d)venv
+(?d)__pycache__
+(?d)*.pyc
+(?d).pytest_cache
+(?d).mypy_cache
+(?d).ruff_cache
+(?d).tox
+
+// ---- Node / JS ----
+(?d)node_modules
+(?d).next
+(?d).parcel-cache
+(?d).turbo
+
+// ---- Build output ----
+(?d)target
+(?d).gradle
+(?d).cache
+
+// ---- Editors / IDEs ----
+(?d).idea
+(?d)*.swp
+(?d)*.swo
+(?d)*~
+
+// ---- Linux ----
+(?d).Trash-*
+(?d).directory
+(?d).fuse_hidden*
+(?d).nfs*
+
+// ---- Windows ----
+(?d)(?i)Thumbs.db
+(?d)(?i)desktop.ini
+(?d)$RECYCLE.BIN
+(?d)System Volume Information
+(?d)*.lnk
+
+// ---- macOS ----
+(?d).DS_Store
+(?d)._*
+
+// ---- Temporary files ----
+(?d)*.tmp
+(?d)~$*

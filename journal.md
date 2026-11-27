@@ -18,8 +18,6 @@ scp -r {Sops-dir} {Homelab-user}@{Homelab-ip-address}:~/Sops
 
 - Setup tailscale
 ```bash
-sudo tailscale login
-# Visit the link it gives and approve the divice in tailscale admin page
 sudo tailscale up
 # Update the DNS ip address to point to the homelab in the tailscale admin page
 ```

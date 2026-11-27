@@ -19,6 +19,7 @@ The goal of this homelab is to run core services locally with proper DNS, revers
 | ----------------------------------------------------- | ---------------------------------------------------- | ---------------- | ------------------ |
 | [Immich](./service/immich/)                           | Self-hosted photo and video backup solution          | `8200`           | photos.homelab     |
 | [Nextcloud](./service/nextcloud/)                     | Self-hosted cloud storage and collaboration platform | `8220`, `8221`   | cloud.homelab      |
+| [Syncthing](./service/syncthing/)                     | Continuous file synchronization between devices      | `8240`           | sync.homelab       |
 
 ### Tools and Utilities (8400 to 8600)
 
