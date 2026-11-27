@@ -12,3 +12,4 @@ python3-pip
 python3-venv
 python3-yaml
 python3-typer
+python3-docker
