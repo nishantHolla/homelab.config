@@ -22,16 +22,23 @@ def _load_secrets(service_name: str) -> Result[dict[str, str], str]:
     if not service_env.is_file():
         return Ok(os.environ.copy())
 
-    env = os.environ.copy()
-    env["SOPS_AGE_KEY_FILE"] = str(Path(v.SOPS_DIR) / "age" / "keys.txt")
+    sops_env = os.environ.copy()
+    sops_env["SOPS_AGE_KEY_FILE"] = str(Path(v.SOPS_DIR) / "age" / "keys.txt")
     stdout = utils.runner.run(
-        f"sops -d {service_env}", capture=True, critical=True
+        f"sops -d {service_env}", capture=True, critical=True, env=sops_env
     ).unwrap()  # Safe to unwrap because critical is True
 
     secrets = yaml.safe_load(stdout)
     env = os.environ.copy()
     for key, value in secrets.items():
-        env[key] = value
+        # YAML parses unquoted values into int/bool/etc., but subprocess env
+        # values must be strings. Keep booleans lowercase as written in YAML.
+        if isinstance(value, bool):
+            env[key] = str(value).lower()
+        elif value is None:
+            env[key] = ""
+        else:
+            env[key] = str(value)
 
     return Ok(env)
 
