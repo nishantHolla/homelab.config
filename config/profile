@@ -5,5 +5,5 @@ export HOMELAB_UID="1000";
 export HOMELAB_GID="100";
 export TZ="Asia/Kolkata";
 
-export PATH="$HOMELAB_DIR/bin:$PATH"
+export PATH="$HOMELAB_DIR/bin:$HOME/.local/bin:$PATH"
 export SOPS_AGE_KEY_FILE="$HOMELAB_SOPS_DIR/age/keys.txt"
